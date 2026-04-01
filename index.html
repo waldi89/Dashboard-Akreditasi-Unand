@@ -1,0 +1,530 @@
+import React, { useState, useMemo } from 'react';
+import { 
+  LayoutDashboard, 
+  Search, 
+  Award, 
+  BookOpen, 
+  ShieldCheck, 
+  Building, 
+  ChevronLeft, 
+  ChevronRight, 
+  FileText
+} from 'lucide-react';
+
+// Data Lengkap berdasarkan website LPM UNAND (154 Data Program Studi)
+// Menambahkan field: sk, berlaku, dan sertifikat (dengan placeholder URL aktif)
+const prodiData = [
+  { id: 1, kode: "62401", nama: "Akuntansi", jenjang: "D3", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "1345/DE/A.5/AR.10/VII/2024", berlaku: "12/07/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 2, kode: "61404", nama: "Manajemen Pemasaran", jenjang: "D3", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "437/DE/A.5/AR.10/V/2023", berlaku: "6/6/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 3, kode: "61417", nama: "Perbankan dan Keuangan", jenjang: "D3", akreditasi: "Baik Sekali", lembaga: "LAMEMBA", sk: "1290/DE/A.5/AR.10/VI/2024", berlaku: "6/28/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 4, kode: "63412", nama: "Administrasi Perkantoran", jenjang: "D3", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "255/DE/A.5/AR.10/III/2023", berlaku: "02/05/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 5, kode: "13201", nama: "Kesehatan Masyarakat", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "1111/LAM-PTKes/Akr/Sar/XII/2024", berlaku: "18/15/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 6, kode: "54294", nama: "Ilmu Tanah", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "7962/SK/BAN-PT/Ak.KP/S/X/2025", berlaku: "01/08/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 7, kode: "46201", nama: "Biologi", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMSAMA", sk: "024/SK/LAMSAMA/Akred/S/XII/2022", berlaku: "13/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 8, kode: "45201", nama: "Fisika", jenjang: "S1", akreditasi: "A", lembaga: "BAN-PT", sk: "8855/SK/BAN-PT/Ak-PPJ/S/VI/2021", berlaku: "18/06/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 9, kode: "47201", nama: "Kimia", jenjang: "S1", akreditasi: "A", lembaga: "BAN-PT", sk: "422/SK/BAN-PT/Ak-PPJ/S/I/2021", berlaku: "12/01/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 10, kode: "22201", nama: "Teknik Sipil", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0031/SK/LAMTeknik/AS/IV/2023", berlaku: "20/04/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 11, kode: "69201", nama: "Sosiologi", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "4920/SK/BAN-PT/Ak.KP/S/XI/2023", berlaku: "22/03/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 12, kode: "61201", nama: "Manajemen", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "003/DE/A.5/AR.10/IX/2022", berlaku: "19/09/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 13, kode: "74207", nama: "Hukum", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "6334/SK/BAN-PT/Ak.KP/S/V/2025", berlaku: "26/06/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 14, kode: "11201", nama: "Kedokteran", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0683/LAM-PTKes/Akr/Sar/VIII/2022", berlaku: "09/09/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 15, kode: "60201", nama: "Ekonomi", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "084/DE/A.5/AR.10/XII/2022", berlaku: "12/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 16, kode: "54211", nama: "Agroteknologi", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "7830/SK/BAN-PT/Ak.KP/S/X/2025", berlaku: "26/08/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 17, kode: "44201", nama: "Matematika", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "1143/SK/BAN-PT/Ak.KP/S/III/2023", berlaku: "28/03/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 18, kode: "82201", nama: "Antropologi Sosial", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "5140/SK/BAN-PT/Ak.Ppj/S/VII/2024", berlaku: "07/08/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 19, kode: "54231", nama: "Peternakan", jenjang: "S1", akreditasi: "A", lembaga: "BAN-PT", sk: "9714/SK/BAN-PT/Ak.Ppj/S/XI/2022", berlaku: "06/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 20, kode: "80204", nama: "Sejarah", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "4777/SK/BAN-PT/Ak-PNB/S/XI/2023", berlaku: "12/07/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 21, kode: "80203", nama: "Teknik Pertanian dan Biosistem", jenjang: "S1", akreditasi: "A", lembaga: "BAN-PT", sk: "6978/SK/BAN-PT/Ak-PNB/S/XII/2024", berlaku: "27/06/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 22, kode: "20201", nama: "Teknik Elektro", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0212/SK/LAM Teknik/AS/IV/2025", berlaku: "20/04/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 23, kode: "54201", nama: "Agribisnis", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "6932/SK/BAN-PT/Ak.KP/S1/VII/2025", berlaku: "02/08/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 24, kode: "62201", nama: "Akuntansi", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "2692/DE/A.5/AR.10/VIII/2025", berlaku: "29/11/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 25, kode: "48201", nama: "Farmasi", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0723/LAM-PTKes/Akr/Sar/VIII/2022", berlaku: "25/08/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 26, kode: "79204", nama: "Sastra Jepang", jenjang: "S1", akreditasi: "A", lembaga: "BAN-PT", sk: "2959/SK/BAN-PT/Ak-PPJ/S/V/2022", berlaku: "12/08/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 27, kode: "79201", nama: "Sastra Indonesia", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "13477/SK/BAN-PT/Akred-PMT/S/XII/2021", berlaku: "21/12/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 28, kode: "14201", nama: "Keperawatan", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0413/LAM-PTKes/Akr/Sar/VI/2024", berlaku: "27/06/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 29, kode: "67201", nama: "Ilmu Politik", jenjang: "S1", akreditasi: "A", lembaga: "BAN-PT", sk: "498/SK/BAN-PT/Ak.Ppj/S/II/2023", berlaku: "13/09/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 30, kode: "61271", nama: "Manajemen (Payakumbuh)", jenjang: "S1", akreditasi: "Baik Sekali", lembaga: "LAMEMBA", sk: "119/DE/A.5/AR.10/XII/2022", berlaku: "29/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 31, kode: "54271", nama: "Peternakan (Payakumbuh)", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "8895/SK/BAN-PT/Ak.Ppj/S/XI/2022", berlaku: "15/11/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 32, kode: "79202", nama: "Sastra Inggris", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "10220/SK/BAN-PT/Ak-PPJ/S/VIII/2021", berlaku: "12/08/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 33, kode: "57201", nama: "Sistem Informasi", jenjang: "S1", akreditasi: "Baik Sekali", lembaga: "LAM-Infokom", sk: "015/SK/LAM-INFOKOM/Ak/S/XII/2022", berlaku: "05/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 34, kode: "13211", nama: "Gizi", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0794/LAM-PTKes/Akr/Sar/X/2023", berlaku: "26/10/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 35, kode: "12201", nama: "Kedokteran Gigi", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "1095/LAM-PTKes/Akr/Sar/XII/2022", berlaku: "28/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 36, kode: "60270", nama: "Ekonomi Pembangunan (Payakumbuh)", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "1772/SK/BAN-PT/Ak-PPJ/S/III/2022", berlaku: "30/03/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 37, kode: "54203", nama: "Penyuluhan Pertanian", jenjang: "S1", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "7533/SK/BAN-PT/Ak/S/IX/2025", berlaku: "09/09/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 38, kode: "54281", nama: "Agroekoteknologi", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "424/SK/BAN-PT/Ak-PPJ/S/I/2022", berlaku: "27/01/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 39, kode: "70201", nama: "Ilmu Komunikasi", jenjang: "S1", akreditasi: "A", lembaga: "BAN-PT", sk: "496/SK/BAN-PT/Ak.Ppj/S/II/2023", berlaku: "04/01/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 40, kode: "84201", nama: "Hubungan Internasional", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "5049/SK/BAN-PT/Ak-PNB/S/XI/2023", berlaku: "05/07/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 41, kode: "41231", nama: "Teknologi Pangan", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "10195/SK/BAN-PT/Ak-PNB/S/XII/2022", berlaku: "30/03/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 42, kode: "56201", nama: "Teknik Komputer", jenjang: "S1", akreditasi: "Baik Sekali", lembaga: "LAM-Infokom", sk: "137/SK/LAM-INFOKOM/Ak/S/XII/2022", berlaku: "23/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 43, kode: "54295", nama: "Proteksi Tanaman", jenjang: "S1", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "356/SK/BAN-PT/Ak/S/II/2024", berlaku: "06/02/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 44, kode: "79211", nama: "Sastra Minangkabau", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "9594/SK/BAN-PT/Ak-PPJ/S/VII/2021", berlaku: "22/07/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 45, kode: "15201", nama: "Kebidanan", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0176/LAM-PTKes/Akr/Sar/II/2025", berlaku: "28/02/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 46, kode: "73201", nama: "Psikologi", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "12970/SK/BAN-PT/Ak-PPJ/S/XII/2021", berlaku: "02/12/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 47, kode: "63203", nama: "Administrasi Publik", jenjang: "S1", akreditasi: "B", lembaga: "BAN-PT", sk: "4789/SK/BAN-PT/Ak-PNB/S/XI/2023", berlaku: "26/04/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 48, kode: "41211", nama: "Teknologi Industri Pertanian", jenjang: "S1", akreditasi: "Baik", lembaga: "BAN-PT", sk: "3224/SK/BAN-PT/Ak/S/VIII/2023", berlaku: "15/08/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 49, kode: "11223", nama: "Ilmu Biomedis", jenjang: "S1", akreditasi: "Baik Sekali", lembaga: "LAMPT-Kes", sk: "0697/LAM-PTKes/Akr/Sar/IX/2024", berlaku: "26/09/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 50, kode: "21201", nama: "Teknik Mesin", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0210/SK/LAM/ Teknik/AS/IV/2025", berlaku: "20/04/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 51, kode: "25201", nama: "Teknik Lingkungan", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0103/SK/LAM Teknik/AS/IV/2025", berlaku: "20/4/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 52, kode: "26201", nama: "Teknik Industri", jenjang: "S1", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0211/SK/LAM Teknik/AS/IV/2025", berlaku: "20/04/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 53, kode: "55202", nama: "Informatika", jenjang: "S1", akreditasi: "Baik", lembaga: "LAM-Infokom", sk: "028/SK/LAM-INFOKOM/Ak.P/S/VIII/2024", berlaku: "09-08-2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 54, kode: "23201", nama: "Arsitektur", jenjang: "S1", akreditasi: "Baik", lembaga: "LAM-Teknik", sk: "40/SK/BAN-PT/Ak.P/S/I/2024", berlaku: "9-1-2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 55, kode: "60230", nama: "Ekonomi Islam", jenjang: "S1", akreditasi: "Baik Sekali", lembaga: "LAMEMBA", sk: "2693/DE/A.5/AR.10/VIII/2025", berlaku: "25/08/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 56, kode: "94202", nama: "Kewirausahaan", jenjang: "S1", akreditasi: "Baik", lembaga: "LAMEMBA", sk: "064/DE/A.5/AR.11/XI/2023", berlaku: "8-11-2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 57, kode: "14901", nama: "Profesi Ners", jenjang: "Profesi", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0414/LAM-PTKes/Akr/Pro/VI/2024", berlaku: "27/06/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 58, kode: "48901", nama: "Profesi Apoteker", jenjang: "Profesi", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0724/LAM-PTKes/Akr/Pro/VIII/2022", berlaku: "25/08/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 59, kode: "11901", nama: "Profesi Dokter", jenjang: "Profesi", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0684/LAM-PTKes/Akr/Pro/VIII/2022", berlaku: "09/09/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 60, kode: "62901", nama: "Profesi Akuntan", jenjang: "Profesi", akreditasi: "Baik Sekali", lembaga: "LAMEMBA", sk: "514/DE/A.5/AR.10/VII/2023", berlaku: "05/07/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 61, kode: "12901", nama: "Dokter Gigi", jenjang: "Profesi", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "1096/LAM-PTKes/Akr /Pro/XII/2022", berlaku: "28/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 62, kode: "15901", nama: "Pendidikan Profesi Bidan", jenjang: "Profesi", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0177/LAM/PT-Kes/Akr/Pro/II/2025", berlaku: "28/02/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 63, kode: "23905", nama: "Pendidikan Profesi Insinyur", jenjang: "Profesi", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "4790/SK/BAN-PT/Ak-PNB/PP/XI/2023", berlaku: "22/11/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 64, kode: "11708", nama: "Obstetri dan Ginekologi", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0159/LAM-PTKes/Akr/Spe/III/2023", berlaku: "10/03/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 65, kode: "11707", nama: "Bedah", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0258/LAM-PTKes/Akr/Spe/IV/2023", berlaku: "13/04/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 66, kode: "11705", nama: "Kesehatan THT-KL", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0126/LAM-PTKes/Akr/Spe/II/2023", berlaku: "23/02/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 67, kode: "11702", nama: "Penyakit Dalam", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0082/LAM-PTKes/Akr/Spe/II/2023", berlaku: "9/02/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 68, kode: "11719", nama: "Patologi Klinik", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0003/LAM-PTKes/Akr/Spe/X/2024", berlaku: "18/01/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 69, kode: "11711", nama: "Kesehatan Anak", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0083/LAM-PTKes/Akr.Spe/II/2023", berlaku: "9/02/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 70, kode: "11703", nama: "Neurologi", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0205/LAM-PTKes/Akr/Spe/III/2023", berlaku: "23/03/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 71, kode: "11701", nama: "Ilmu Penyakit Mata", jenjang: "Sp-1", akreditasi: "Baik Sekali", lembaga: "LAMPT-Kes", sk: "0730/LAM-PTKes/Akr/Spe/X/2023", berlaku: "12/10/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 72, kode: "11704", nama: "Dermatologi, Venereologi, Estetika", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0421/LAM-PTKes/Akr/Spe/VI/2023", berlaku: "08/06/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 73, kode: "11715", nama: "Jantung dan Pembuluh Darah", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0799/LAM-PTKes/Akr/S/Spe/XI/2023", berlaku: "9/11/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 74, kode: "11709", nama: "Pulmonologi dan Kedokteran Respirasi", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0869/LAM-PTKes/Akr/Spe/XII/2023", berlaku: "07/12/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 75, kode: "11718", nama: "Ilmu Patologi Anatomi", jenjang: "Sp-1", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0135/LAM-PTKes/Akr/Spe/III/2024", berlaku: "14/03/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 76, kode: "11728", nama: "Orthopedi dan Traumatologi", jenjang: "Sp-1", akreditasi: "Baik Sekali", lembaga: "LAMPT-Kes", sk: "0913/LAM-PTKes/Akr/Spe/XII/2023", berlaku: "21-12-2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 77, kode: "11751", nama: "Anestesiologi dan Terapi Intensif", jenjang: "Sp-1", akreditasi: "Baik", lembaga: "LAMPT-Kes", sk: "0240/LAM-PTKes/Akr.PB/Spe/XII/2023", berlaku: "19-2-2025", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 78, kode: "11816", nama: "Obstetri dan Ginekologi Subspesialis", jenjang: "Sp-2", akreditasi: "Baik Sekali", lembaga: "LAMPT-Kes", sk: "0303//LAM-TKes/Akr/SubSpe/V/2024", berlaku: "29 Mei 2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 79, kode: "11734", nama: "Penyakit Dalam Subspesialis", jenjang: "Sp-2", akreditasi: "Baik", lembaga: "LAMPT-Kes", sk: "013/LAM-PTKes/Akr.PB/SubSpe/I/2023", berlaku: "9 Mei 2024", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 80, kode: "95106", nama: "Ilmu Penyuluhan & Komunikasi", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "4872/SK/BAN-PT/Ak/M/VII/2024", berlaku: "9/07/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 81, kode: "44101", nama: "Matematika", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMSAMA", sk: "100/SK/LAMSAMA/Akred/M/V/2025", berlaku: "14/05/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 82, kode: "21101", nama: "Teknik Mesin", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "LAM-Teknik", sk: "0748/SK/LAM Teknik/AM/XII/2024", berlaku: "20-12-2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 83, kode: "63101", nama: "Administrasi Publik", jenjang: "S2", akreditasi: "B", lembaga: "BAN-PT", sk: "5196/SK/BAN-PT/Ak.Ppj/M/VII/2024", berlaku: "14/08/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 84, kode: "79105", nama: "Susastra", jenjang: "S2", akreditasi: "B", lembaga: "BAN-PT", sk: "4645/SK/BAN-PT/Ak/M/VI/2024", berlaku: "11-06-2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 85, kode: "95112", nama: "Pengelolaan Sumber Daya Alam", jenjang: "S2", akreditasi: "B", lembaga: "BAN-PT", sk: "6579/SK/BAN-PT/Ak.S/M/V/2025", berlaku: "05/05/2025", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 86, kode: "79104", nama: "Linguistik", jenjang: "S2", akreditasi: "B", lembaga: "BAN-PT", sk: "4785/SK/BAN-PT/Ak-PNB/M/XI/2023", berlaku: "06/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 87, kode: "80102", nama: "Kajian Sejarah", jenjang: "S2", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "5051/SK/BAN-PT/Ak-PNB/M/XI/2023", berlaku: "7/11/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 88, kode: "14101", nama: "Keperawatan", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0023/LAM-PTKes/Akr/Mag/II/2021", berlaku: "25/02/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 89, kode: "54107", nama: "Bioteknologi", jenjang: "S2", akreditasi: "B", lembaga: "LAMPT-Kes", sk: "10378/SK/BAN-PT/Ak.Ppj/M/XII/2022", berlaku: "28/12/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 90, kode: "13101", nama: "Kesehatan Masyarakat", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "LAMPT-Kes", sk: "0126/LAM-PTKes/Akr/Mag/III/2024", berlaku: "28/02/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 91, kode: "13111", nama: "Ilmu Gizi", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "LAMPT-Kes", sk: "0892/LAM-PTKes/Akr/Mag/X/2024", berlaku: "20/05/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 92, kode: "25101", nama: "Teknik Lingkungan", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0491/SK/LAM Teknik/AM/VIII/2024", berlaku: "20/08/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 93, kode: "82101", nama: "Antropologi", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "4871/SK/BAN-PT/Ak/M/VII/2024", berlaku: "9/07/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 94, kode: "95136", nama: "Perumahan dan Pemukiman", jenjang: "S2", akreditasi: "Baik", lembaga: "BAN-PT", sk: "7010/SK/BAN-PT/Ak.P/S2/VII/2025", berlaku: "08/07/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 95, kode: "67101", nama: "Ilmu Politik", jenjang: "S2", akreditasi: "B", lembaga: "BAN-PT", sk: "720/SK/BAN-PT/Ak.Ppj/M/III/2024", berlaku: "20/03/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 96, kode: "54105", nama: "Ilmu Tanah", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "13229/SK/BAN-PT/Akred/M/XII/2021", berlaku: "15/12/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 97, kode: "70101", nama: "Ilmu Komunikasi", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMSPAK", sk: "123/AK.03.05/2025", berlaku: "09/12/2025", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 98, kode: "62101", nama: "Akuntansi", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "548/DE/A.5/AR.10/VII/2023", berlaku: "25/07/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 99, kode: "11106", nama: "Ilmu Biomedis", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0007/LAM-PTKes/Akr/Mag/I/2026", berlaku: "24/01/2031", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 100, kode: "95129", nama: "Ilmu Lingkungan", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "3050/SK/BAN-PT/Ak/M/VIII/2023", berlaku: "1/8/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 101, kode: "22101", nama: "Teknik Sipil", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0415/SK/LAM Teknik/AM/VIII/2024", berlaku: "20/08/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 102, kode: "41111", nama: "Teknologi Industri Pertanian", jenjang: "S2", akreditasi: "B", lembaga: "BAN-PT", sk: "66152/SK/BAN-PT/Ak.Ppj/M/III/2025", berlaku: "26-03-2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 103, kode: "15101", nama: "Kebidanan", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "LAMPT-Kes", sk: "0105/LAM-PTKes/Akr/Mag/II/2023", berlaku: "9/2/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 104, kode: "26101", nama: "Teknik Industri", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0105/SK/LAMTeknik/AM/IV/2025", berlaku: "20/04/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 105, kode: "48101", nama: "Farmasi", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0409/LAM-PTKes/Akr/Mag/III/2025", berlaku: "20/03/2030", sertifikat: "-" },
+  { id: 106, kode: "54195", nama: "Proteksi Tanaman", jenjang: "S2", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "5281/SK/BAN-PT/Ak-PNB/M/XII/2023", berlaku: "14/11/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 107, kode: "74102", nama: "Kenotariatan", jenjang: "S2", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "6158/SK/BAN-PT/Ak/M/X/2024", berlaku: "8-10-2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 108, kode: "20101", nama: "Teknik Elektro", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "LAM-Teknik", sk: "0490/SK/LAM Teknik/AM/VIII/2025", berlaku: "20/08/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 109, kode: "80103", nama: "Teknik Pertanian dan Biosistem", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "6980/SK/BAN-PT/Ak-PNB/M/XII/2024", berlaku: "12/12/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 110, kode: "13121", nama: "Epidemiologi", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0408/LAM-PTKes/Akr/Mag/VI/2022", berlaku: "09/06/2027", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 111, kode: "54102", nama: "Ekonomi Pertanian", jenjang: "S2", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "2408/SK/BAN-PT/Akred/M/IV/2021", berlaku: "27/04/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 112, kode: "95127", nama: "Kajian Budaya", jenjang: "S2", akreditasi: "Baik", lembaga: "BAN-PT", sk: "10096/SK/BAN-PT/Akred/M/VIII/2021", berlaku: "10/08/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 113, kode: "74108", nama: "Hukum", jenjang: "S2", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "3982/SK/BAN-PT/Ak.Ppj/M/V/2024", berlaku: "24/04/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 114, kode: "45101", nama: "Fisika", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMSAMA", sk: "068/SK/LAMSAMA/Akred/M/V/2025", berlaku: "01/05/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 115, kode: "87122", nama: "Ekonomi", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "2686/DE/A.5/AR.10/VIII/2025", berlaku: "25/08/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 116, kode: "61101", nama: "Manajemen", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "728/DE/A.5/AR.10/IX/2023", berlaku: "23/10/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 117, kode: "54104", nama: "Agronomi", jenjang: "S2", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "7504/SK/BAN-PT/Ak/M/IX/2025", berlaku: "02/09/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 118, kode: "46101", nama: "Biologi", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMSAMA", sk: "102/SK/LAMSAMA/Akred/M/X/2023", berlaku: "26/10/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 119, kode: "54131", nama: "Ilmu Peternakan", jenjang: "S2", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "6601/SK/BAN-PT/Ak.KP/M/V/2025", berlaku: "19/09/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 120, kode: "47101", nama: "Kimia", jenjang: "S2", akreditasi: "Unggul", lembaga: "LAMSAMA", sk: "011/SK/LAMSAMA/Akred/M/III/2024", berlaku: "21/03/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 121, kode: "95103", nama: "Pembangunan Wilayah", jenjang: "S2", akreditasi: "A", lembaga: "BAN-PT", sk: "337/AK.03.01/2025", berlaku: "06/04/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 122, kode: "69101", nama: "Sosiologi", jenjang: "S2", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "562/SK/BAN-PT/Ak.KP/M/II/2024", berlaku: "27/06/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 123, kode: "41123", nama: "Teknologi Pangan", jenjang: "S2", akreditasi: "Baik", lembaga: "BAN-PT", sk: "4357/SK/BAN-PT/Ak.P/M/X/2023", berlaku: "24-10-2025", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 124, kode: "13161", nama: "Administrasi Rumah Sakit", jenjang: "S2", akreditasi: "Terakreditasi", lembaga: "LAMPT-Kes", sk: "0039/LAM-PTKes/Akr PSB.PTN-BH/Mag/IX/2023", berlaku: "-", sertifikat: "-" },
+  { id: 125, kode: "22106", nama: "Manajemen Bencana", jenjang: "S2", akreditasi: "Terakreditasi Pertama", lembaga: "BAN-PT", sk: "026/SK/BAN-PT/Ak.P/2.0/S2/l/2026", berlaku: "06-01-2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 126, kode: "21001", nama: "Teknik Mesin", jenjang: "S3", akreditasi: "Unggul", lembaga: "LAM-Teknik", sk: "0490/SK/LAM Teknik/AD/VIII/2024", berlaku: "20/08/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 127, kode: "74005", nama: "Hukum", jenjang: "S3", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "6337/SK/BAN-PT/Ak.KP/D/V/2025", berlaku: "21/08/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 128, kode: "11006", nama: "Ilmu Biomedis", jenjang: "S3", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0302/LAM-PTKes/Akr/Dok/V/2024", berlaku: "29-5/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 129, kode: "47001", nama: "Ilmu Kimia", jenjang: "S3", akreditasi: "Unggul", lembaga: "LAMSAMA", sk: "069/SK/LAMSAMA/Akred/D/VII/2023", berlaku: "14/07/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 130, kode: "48001", nama: "Farmasi", jenjang: "S3", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0194/LAM-PTKes/Akr/Dok/II/2025", berlaku: "27/02/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 131, kode: "60004", nama: "Ekonomi", jenjang: "S3", akreditasi: "A", lembaga: "LAMEMBA", sk: "559/DE/A.5/LAMEMBA-S/X/2025", berlaku: "06/04/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 132, kode: "54031", nama: "Ilmu Peternakan", jenjang: "S3", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "4568/SK/BAN-PT/Ak/D/VI/2024", berlaku: "4/6/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 133, kode: "46001", nama: "Biologi", jenjang: "S3", akreditasi: "Unggul", lembaga: "LAMSAMA", sk: "146/SK/LAMSAMA/Akred/D/XII/2023", berlaku: "29/12/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 134, kode: "13001", nama: "Kesehatan Masyarakat", jenjang: "S3", akreditasi: "Unggul", lembaga: "LAMPT-Kes", sk: "0411/LAM-PTKes/Akr/Dok/V/2023", berlaku: "25/05/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 135, kode: "54001", nama: "Ilmu Pertanian", jenjang: "S3", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "7044/SK/BAN-PT/Ak/S3/VII/2025", berlaku: "29/07/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 136, kode: "95006", nama: "Studi Pembangunan", jenjang: "S3", akreditasi: "Unggul", lembaga: "BAN-PT", sk: "7503/SK/BAN-PT/Ak/D/IX/2025", berlaku: "02/09/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 137, kode: "61001", nama: "Manajemen", jenjang: "S3", akreditasi: "Unggul", lembaga: "LAMEMBA", sk: "2689/DE/A.5/AR.10/VII/2025", berlaku: "25/08/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 138, kode: "22001", nama: "Teknik Sipil", jenjang: "S3", akreditasi: "Baik Sekali", lembaga: "LAM-Teknik", sk: "0406/SK/LAM Teknik/AD/XII/2023", berlaku: "20/12/2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 139, kode: "95007", nama: "Studi Kebijakan", jenjang: "S3", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "6902/SK/BAN-PT/Ak/S3/VII/2025", berlaku: "01/07/2030", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 140, kode: "20001", nama: "Teknik Elektro", jenjang: "S3", akreditasi: "Baik Sekali", lembaga: "LAM-Teknik", sk: "0749/SK/LAM Teknik/AD/XII/2024", berlaku: "21/12/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 141, kode: "69001", nama: "Sosiologi", jenjang: "S3", akreditasi: "Baik Sekali", lembaga: "BAN-PT", sk: "4345/SK/BAN-PT/Ak/D/V/2024", berlaku: "21-05-2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 142, kode: "26002", nama: "Teknik Industri", jenjang: "S3", akreditasi: "Baik Sekali", lembaga: "LAM-Teknik", sk: "0750/SK/LAM Teknik/AD/XII/2024", berlaku: "21/12/2029", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 143, kode: "44002", nama: "Matematika", jenjang: "S3", akreditasi: "Terakreditasi", lembaga: "LAMSAMA", sk: "-", berlaku: "-", sertifikat: "-" },
+  { id: 144, kode: "62001", nama: "Ilmu Akuntansi", jenjang: "S3", akreditasi: "Baik", lembaga: "LAMEMBA", sk: "065/DE/A.5/AR.11/XI/2023", berlaku: "8-11-2028", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 145, kode: "25001", nama: "Teknik Lingkungan", jenjang: "S3", akreditasi: "Baik", lembaga: "LAM-Teknik", sk: "0520/SK/LAMTeknik/AD/VIII/2024", berlaku: "14/8/2026", sertifikat: "https://newlpm.unand.ac.id/" },
+  { id: 146, kode: "13702", nama: "Gizi Klinis", jenjang: "Sp-1", akreditasi: "Terakreditasi", lembaga: "LAMPT-Kes", sk: "006/LAM-PTKes/Akr PSB.PTN-BH/Spe/2024", berlaku: "-", sertifikat: "-" },
+  { id: 147, kode: "11776", nama: "Urologi", jenjang: "Sp-1", akreditasi: "Terakreditasi", lembaga: "LAMPT-Kes", sk: "00/LAM-PTKes/Akr PSB.PTN-BH/Spe/2024", berlaku: "-", sertifikat: "-" },
+  { id: 148, kode: "11732", nama: "Linguistik", jenjang: "S3", akreditasi: "Terakreditasi", lembaga: "BAN-PT", sk: "-", berlaku: "-", sertifikat: "-" },
+  { id: 149, kode: "79003", nama: "Statistika dan Sains Data", jenjang: "S1", akreditasi: "Terakreditasi", lembaga: "BAN-PT", sk: "-", berlaku: "-", sertifikat: "-" },
+  { id: 150, kode: "49205", nama: "Bedah", jenjang: "Sp-2", akreditasi: "Terakreditasi", lembaga: "LAMPT-Kes", sk: "-", berlaku: "-", sertifikat: "-" },
+  { id: 151, kode: "12709", nama: "Bedah Mulut dan Maksilofasial", jenjang: "Sp-1", akreditasi: "Terakreditasi", lembaga: "LAMPT-Kes", sk: "-", berlaku: "-", sertifikat: "-" },
+  { id: 152, kode: "81201", nama: "Arkeologi", jenjang: "S1", akreditasi: "Terakreditasi", lembaga: "BAN-PT", sk: "-", berlaku: "-", sertifikat: "-" },
+  { id: 153, kode: "54240", nama: "Nutrisi dan Teknologi Pakan Ternak", jenjang: "S1", akreditasi: "Terakreditasi", lembaga: "BAN-PT", sk: "-", berlaku: "-", sertifikat: "-" },
+  { id: 154, kode: "73901", nama: "Pendidikan Profesi Psikologi", jenjang: "Profesi", akreditasi: "Terakreditasi", lembaga: "BAN-PT", sk: "-", berlaku: "-", sertifikat: "-" }
+];
+
+export default function App() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterJenjang, setFilterJenjang] = useState('All');
+  const [filterAkreditasi, setFilterAkreditasi] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // Derive global statistics
+  const stats = useMemo(() => {
+    let unggulA = 0;
+    let baikSekaliB = 0;
+    const lembagaSet = new Set();
+    const akreditasiCounts = { 'Unggul': 0, 'A': 0, 'Baik Sekali': 0, 'B': 0, 'Baik': 0, 'Terakreditasi': 0 };
+    const jenjangCounts = {};
+    const lembagaCounts = {};
+
+    prodiData.forEach(p => {
+      // General Stats
+      if (p.akreditasi === 'Unggul' || p.akreditasi === 'A') unggulA++;
+      if (p.akreditasi === 'Baik Sekali' || p.akreditasi === 'B') baikSekaliB++;
+      
+      let normalizedLembaga = p.lembaga.toUpperCase();
+      lembagaSet.add(normalizedLembaga);
+
+      // Detail Stats
+      let mappedAkreditasi = p.akreditasi;
+      if (mappedAkreditasi === 'Terakreditasi Pertama') mappedAkreditasi = 'Terakreditasi';
+      
+      if (akreditasiCounts[mappedAkreditasi] !== undefined) {
+        akreditasiCounts[mappedAkreditasi]++;
+      }
+      
+      jenjangCounts[p.jenjang] = (jenjangCounts[p.jenjang] || 0) + 1;
+      lembagaCounts[normalizedLembaga] = (lembagaCounts[normalizedLembaga] || 0) + 1;
+    });
+
+    return {
+      total: prodiData.length,
+      unggulA,
+      baikSekaliB,
+      totalLembaga: lembagaSet.size,
+      akreditasiCounts,
+      jenjangCounts,
+      lembagaCounts
+    };
+  }, []);
+
+  // Filter Data for Table
+  const filteredData = useMemo(() => {
+    return prodiData.filter(p => {
+      const matchSearch = p.nama.toLowerCase().includes(searchTerm.toLowerCase()) || p.kode.includes(searchTerm);
+      const matchJenjang = filterJenjang === 'All' || p.jenjang === filterJenjang;
+      const matchAkreditasi = filterAkreditasi === 'All' || p.akreditasi === filterAkreditasi;
+      return matchSearch && matchJenjang && matchAkreditasi;
+    });
+  }, [searchTerm, filterJenjang, filterAkreditasi]);
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const currentItems = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  // Helper for Badge Colors
+  const getBadgeColor = (akreditasi) => {
+    switch (akreditasi) {
+      case 'Unggul': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      case 'A': return 'bg-green-100 text-green-700 border-green-200';
+      case 'Baik Sekali': return 'bg-blue-100 text-blue-700 border-blue-200';
+      case 'B': return 'bg-sky-100 text-sky-700 border-sky-200';
+      case 'Baik': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+      case 'Terakreditasi': 
+      case 'Terakreditasi Pertama': return 'bg-purple-100 text-purple-700 border-purple-200';
+      default: return 'bg-gray-100 text-gray-700 border-gray-200';
+    }
+  };
+
+  // Prepare chart arrays
+  const barChartData = [
+    { label: 'Unggul', value: stats.akreditasiCounts['Unggul'], color: 'bg-emerald-500' },
+    { label: 'A', value: stats.akreditasiCounts['A'], color: 'bg-green-500' },
+    { label: 'Baik Sekali', value: stats.akreditasiCounts['Baik Sekali'], color: 'bg-blue-500' },
+    { label: 'B', value: stats.akreditasiCounts['B'], color: 'bg-sky-500' },
+    { label: 'Baik', value: stats.akreditasiCounts['Baik'], color: 'bg-yellow-500' },
+    { label: 'Terakreditasi', value: stats.akreditasiCounts['Terakreditasi'], color: 'bg-purple-500' }
+  ];
+  const maxBarValue = Math.max(...barChartData.map(d => d.value), 1);
+
+  const jenjangOrder = ['D3', 'S1', 'S2', 'S3', 'Profesi', 'Sp-1', 'Sp-2'];
+  
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-12">
+      {/* Header Area */}
+      <header className="bg-gradient-to-r from-emerald-800 to-teal-700 text-white pt-8 pb-16 px-6 sm:px-10 shadow-lg relative">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
+              <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                <LayoutDashboard className="h-7 w-7 text-emerald-50" />
+              </div>
+              Dashboard Akreditasi Prodi
+            </h1>
+            <p className="text-emerald-100 mt-2 text-sm sm:text-base opacity-90">Lembaga Penjaminan Mutu (LPM) - Universitas Andalas</p>
+          </div>
+          <div className="hidden md:flex items-center gap-4">
+            <div className="bg-white/10 px-5 py-2.5 rounded-xl backdrop-blur-md border border-white/20 shadow-inner">
+              <span className="text-xs text-emerald-100 block uppercase tracking-wider font-semibold">Tahun Akademik</span>
+              <span className="font-bold text-base">2024 / 2025</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10 space-y-6">
+        
+        {/* KPI Cards Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <StatCard icon={<BookOpen className="h-6 w-6"/>} title="Total Program Studi" value={stats.total} subtitle="Sampel Data Terpadu" color="text-emerald-600" />
+          <StatCard icon={<Award className="h-6 w-6"/>} title="Unggul & A" value={stats.unggulA} subtitle={`${Math.round((stats.unggulA/stats.total)*100)}% dari Total Prodi`} color="text-green-600" />
+          <StatCard icon={<ShieldCheck className="h-6 w-6"/>} title="Baik Sekali & B" value={stats.baikSekaliB} subtitle={`${Math.round((stats.baikSekaliB/stats.total)*100)}% dari Total Prodi`} color="text-blue-600" />
+          <StatCard icon={<Building className="h-6 w-6"/>} title="Lembaga Penilai" value={stats.totalLembaga} subtitle="BAN-PT, LAM-PTKes, dll." color="text-amber-500" />
+        </div>
+
+        {/* Charts Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* Chart 1: Bar Chart Peringkat Akreditasi */}
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 lg:col-span-2">
+            <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <Award className="h-5 w-5 text-emerald-600" />
+              Sebaran Peringkat Akreditasi
+            </h2>
+            <div className="flex items-end h-56 gap-2 sm:gap-4 mt-4">
+              {barChartData.map((d, i) => (
+                <div key={i} className="flex flex-col items-center flex-1 group relative h-full justify-end">
+                  {/* Tooltip */}
+                  <div className="absolute -top-10 bg-slate-800 text-white text-xs py-1.5 px-3 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10 pointer-events-none">
+                    {d.value} Program Studi
+                  </div>
+                  {/* Bar */}
+                  <div 
+                    className={`w-full max-w-[60px] rounded-t-md transition-all duration-700 ease-out ${d.color} hover:brightness-110 shadow-sm`}
+                    style={{ height: `${(d.value / maxBarValue) * 100}%`, minHeight: '4px' }}
+                  ></div>
+                  <span className="text-xs sm:text-sm font-medium mt-3 text-slate-600 text-center">{d.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Chart 2: Sebaran Jenjang */}
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
+            <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-emerald-600" />
+              Distribusi Jenjang
+            </h2>
+            <div className="flex-1 space-y-4 flex flex-col justify-center">
+              {jenjangOrder.map(jenjang => {
+                const count = stats.jenjangCounts[jenjang] || 0;
+                if (count === 0) return null;
+                const percentage = (count / stats.total) * 100;
+                return (
+                  <div key={jenjang} className="group">
+                    <div className="flex justify-between text-sm font-medium text-slate-700 mb-1.5">
+                      <span>{jenjang}</span>
+                      <span className="text-slate-500">{count} Prodi</span>
+                    </div>
+                    <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                      <div 
+                        className="bg-emerald-500 h-full rounded-full transition-all duration-1000 ease-out group-hover:bg-emerald-400" 
+                        style={{ width: `${percentage}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Lembaga Akreditasi Grid */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+          <h2 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <Building className="h-5 w-5 text-emerald-600" />
+            Lembaga Akreditasi
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+            {Object.entries(stats.lembagaCounts).map(([nama, jumlah]) => (
+              <div key={nama} className="bg-slate-50 hover:bg-emerald-50 transition-colors duration-200 rounded-xl p-4 border border-slate-100 flex flex-col items-center justify-center text-center gap-2 group">
+                <span className="text-sm font-semibold text-slate-700 group-hover:text-emerald-800">{nama}</span>
+                <span className="bg-white px-3 py-1 rounded-md text-sm font-bold text-emerald-600 shadow-sm border border-emerald-100">
+                  {jumlah}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Data Table Section */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col md:flex-row gap-4 items-center justify-between">
+            <h2 className="text-lg font-bold text-slate-800">Direktori Program Studi</h2>
+            
+            {/* Filters */}
+            <div className="flex flex-col sm:flex-row w-full md:w-auto gap-3">
+              <div className="relative w-full sm:w-64">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <input 
+                  type="text" 
+                  placeholder="Cari prodi atau kode..." 
+                  className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
+                  value={searchTerm}
+                  onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                />
+              </div>
+              
+              <div className="flex gap-2 w-full sm:w-auto">
+              <select 
+                className="w-full sm:w-auto px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                value={filterJenjang}
+                onChange={(e) => { setFilterJenjang(e.target.value); setCurrentPage(1); }}
+              >
+                <option value="All">Semua Jenjang</option>
+                {jenjangOrder.map(j => <option key={j} value={j}>{j}</option>)}
+              </select>
+              
+              <select 
+                className="w-full sm:w-auto px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                value={filterAkreditasi}
+                onChange={(e) => { setFilterAkreditasi(e.target.value); setCurrentPage(1); }}
+              >
+                <option value="All">Semua Akreditasi</option>
+                <option value="Unggul">Unggul</option>
+                <option value="A">A</option>
+                <option value="Baik Sekali">Baik Sekali</option>
+                <option value="B">B</option>
+                <option value="Baik">Baik</option>
+                <option value="Terakreditasi">Terakreditasi</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm text-slate-600">
+              <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 font-medium uppercase text-xs tracking-wider">
+                <tr>
+                  <th className="px-6 py-4">No.</th>
+                  <th className="px-6 py-4">Kode</th>
+                  <th className="px-6 py-4">Nama Program Studi</th>
+                  <th className="px-6 py-4">Jenjang</th>
+                  <th className="px-6 py-4">Akreditasi</th>
+                  <th className="px-6 py-4">No. SK Akreditasi</th>
+                  <th className="px-6 py-4">Berlaku Sampai</th>
+                  <th className="px-6 py-4 text-center">Sertifikat</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {currentItems.length > 0 ? (
+                  currentItems.map((item, index) => (
+                    <tr key={item.id} className="hover:bg-emerald-50/30 transition-colors">
+                      <td className="px-6 py-4 text-slate-500 font-medium">
+                        {(currentPage - 1) * itemsPerPage + index + 1}
+                      </td>
+                      <td className="px-6 py-4 font-mono text-slate-500">{item.kode}</td>
+                      <td className="px-6 py-4 font-medium text-slate-800">{item.nama}</td>
+                      <td className="px-6 py-4">{item.jenjang}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-block whitespace-nowrap px-2.5 py-1 rounded-md text-xs font-semibold border ${getBadgeColor(item.akreditasi)}`}>
+                          {item.akreditasi}
+                        </span>
+                        <div className="text-xs text-slate-400 mt-1">{item.lembaga}</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-xs break-all">{item.sk || "-"}</span>
+                      </td>
+                      <td className="px-6 py-4 text-slate-500">{item.berlaku || "-"}</td>
+                      <td className="px-6 py-4 text-center">
+                         {item.sertifikat && item.sertifikat !== "-" ? (
+                           <a 
+                             href={item.sertifikat} 
+                             target="_blank" 
+                             rel="noopener noreferrer"
+                             className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-100 text-emerald-700 hover:bg-emerald-200 rounded-md text-xs font-medium transition-colors"
+                             title="Unduh Sertifikat"
+                           >
+                             <FileText className="w-3.5 h-3.5" />
+                             Lihat
+                           </a>
+                         ) : (
+                           <span className="text-xs text-slate-400 italic">Tidak Tersedia</span>
+                         )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="8" className="px-6 py-12 text-center text-slate-500">
+                      Tidak ada data program studi yang cocok dengan pencarian Anda.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between bg-slate-50">
+              <span className="text-sm text-slate-500">
+                Menampilkan <span className="font-semibold text-slate-700">{(currentPage - 1) * itemsPerPage + 1}</span> - <span className="font-semibold text-slate-700">{Math.min(currentPage * itemsPerPage, filteredData.length)}</span> dari <span className="font-semibold text-slate-700">{filteredData.length}</span> entri
+              </span>
+              <div className="flex gap-1">
+                <button 
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="p-1.5 rounded bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button 
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="p-1.5 rounded bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        {/* Footer info */}
+        <div className="text-center text-xs text-slate-400 mt-8 pb-4">
+          Data divisualisasikan untuk tujuan demonstrasi berdasarkan LPM Universitas Andalas (newlpm.unand.ac.id)
+        </div>
+
+      </main>
+    </div>
+  );
+}
+
+// Reusable Component for Stat Cards
+function StatCard({ icon, title, value, subtitle, color }) {
+  return (
+    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="text-sm font-medium text-slate-500 mb-1">{title}</p>
+          <h3 className="text-3xl font-bold text-slate-800">{value}</h3>
+          <p className="text-xs text-slate-400 mt-2 font-medium">{subtitle}</p>
+        </div>
+        <div className={`p-3 rounded-xl bg-slate-50 ${color}`}>
+          {icon}
+        </div>
+      </div>
+    </div>
+  );
+}
