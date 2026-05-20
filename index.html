@@ -45,6 +45,50 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         
+        <!-- Filter Section (Moved to top) -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5">
+            <h3 class="text-sm font-semibold text-slate-800 mb-3 flex items-center"><i data-lucide="sliders-horizontal" class="w-4 h-4 mr-2"></i> Filter & Pencarian Data</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Search -->
+                <div class="relative">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                    <input type="text" id="searchInput" placeholder="Cari prodi atau kode..." class="pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full" />
+                </div>
+
+                <!-- Filter Jenjang -->
+                <div class="relative">
+                    <i data-lucide="filter" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                    <select id="filterSelect" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
+                        <option value="All">Semua Jenjang</option>
+                    </select>
+                </div>
+
+                <!-- Filter Peringkat -->
+                <div class="relative">
+                    <i data-lucide="award" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                    <select id="filterPeringkat" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
+                        <option value="All">Semua Peringkat</option>
+                    </select>
+                </div>
+
+                <!-- Filter Lembaga -->
+                <div class="relative">
+                    <i data-lucide="building" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                    <select id="filterLembaga" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
+                        <option value="All">Semua Lembaga</option>
+                    </select>
+                </div>
+
+                <!-- Filter Masa Berlaku -->
+                <div class="relative">
+                    <i data-lucide="clock" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                    <select id="filterMasa" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
+                        <option value="All">Semua Masa Berlaku</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <!-- Dashboard Summary Cards Section -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5 flex items-center space-x-4">
@@ -106,38 +150,7 @@
         <!-- Data Table Section -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
             <div class="p-6 border-b border-slate-100 bg-slate-50/50">
-                <h3 class="text-lg font-semibold text-slate-800 mb-4">Detail Data Akreditasi</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Filter -->
-                    <div class="relative">
-                        <i data-lucide="filter" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                        <select id="filterSelect" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
-                            <option value="All">Semua Jenjang</option>
-                        </select>
-                    </div>
-
-                    <!-- Filter Peringkat -->
-                    <div class="relative">
-                        <i data-lucide="award" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                        <select id="filterPeringkat" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
-                            <option value="All">Semua Peringkat</option>
-                        </select>
-                    </div>
-
-                    <!-- Filter Lembaga -->
-                    <div class="relative">
-                        <i data-lucide="building" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                        <select id="filterLembaga" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
-                            <option value="All">Semua Lembaga</option>
-                        </select>
-                    </div>
-
-                    <!-- Search -->
-                    <div class="relative">
-                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                        <input type="text" id="searchInput" placeholder="Cari prodi atau kode..." class="pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full" />
-                    </div>
-                </div>
+                <h3 class="text-lg font-semibold text-slate-800">Detail Data Akreditasi</h3>
             </div>
 
             <div class="overflow-x-auto min-h-[400px] max-h-[600px] table-container relative">
@@ -294,7 +307,7 @@
                 <tr><td>121</td><td>95103</td><td>Pembangunan Wilayah Dan Pedesaan</td><td>S2</td><td>A</td><td>337/AK.03.01/2025</td><td>06/04/2025 - 06/04/2026</td><td>BAN-PT</td><td>Sertifikat</td></tr>
                 <tr><td>122</td><td>69101</td><td>Sosiologi</td><td>S2</td><td>Unggul</td><td>562/SK/BAN-PT/Ak.KP/M/II/2024</td><td>27/06/2023 – 27/06/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1aVmt55RaI0ne2AU5-quwBuIuZUJh4DaR/view?usp=sharing">Sertifikat</a></td></tr>
                 <tr><td>123</td><td>41123</td><td>Teknologi Pangan dan Hasil Pertanian</td><td>S2</td><td>Baik</td><td>4357/SK/BAN-PT/Ak.P/M/X/2023</td><td>24-10-2023 - 24-10-2025</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S2-Teknologi-Pangan-dan-Hasil-Pertanian.pdf">Sertifikat</a></td></tr>
-                <tr><td>124</td><td>13161</td><td>Administrasi Rumah Sakit</td><td>S2</td><td>Terakreditasi</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Minimum-Prodi-Administrasi-Rumah-Sakit-Program-Magister-FK-UNAND.pdf">0039/LAM-PTKes/Akr PSB.PTN-BH/Mag/IX/2023</a></td><td>-</td><td>LAMPT-Kes</td><td>-</td></tr>
+                <tr><td>124</td><td>13161</td><td>Administrasi Rumah Sakit</td><td>S2</td><td>Terakreditasi Pertama</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Minimum-Prodi-Administrasi-Rumah-Sakit-Program-Magister-FK-UNAND.pdf">0039/LAM-PTKes/Akr PSB.PTN-BH/Mag/IX/2023</a></td><td>-</td><td>LAMPT-Kes</td><td>-</td></tr>
                 <tr><td>125</td><td>22106</td><td>Manajemen Bencana</td><td>S2</td><td>Terakreditasi Pertama</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/01/SK-Akreditasi-S2-Manajemen-Bencana.pdf">026/SK/BAN-PT/Ak.P/2.0/S2/l/2026</a></td><td>06-01-2026 - 06-01-2028</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/01/Sertifikat-AKreditasi-Prodi-S2-Manajemen-Bencana.pdf">Sertifikat</a></td></tr>
                 <tr><td>126</td><td>21001</td><td>Teknik Mesin</td><td>S3</td><td>Unggul</td><td>0490/SK/LAM Teknik/AD/VIII/2024</td><td>21/08/2024 – 20/08/2029</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1p-I63Bqbu2Del3ra6F7a4rbhPqK5e4u7/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>127</td><td>74005</td><td>Hukum</td><td>S3</td><td>Unggul</td><td>6337/SK/BAN-PT/Ak.KP/D/V/2025</td><td>06/05/2025 – 21/08/2029</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S3-HUKUM.pdf">Sertifikat</a></td></tr>
@@ -316,15 +329,15 @@
                 <tr><td>143</td><td>44002</td><td>Matematika</td><td>S3</td><td>Baik</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/04/SK.A.099-SK-Peringkat-Akreditasi-S3-Matematika-UNAND.pdf">099/SK/LAMSAMA/Akred/D/IV/2026</a></td><td>15/04/2026 – 16/04/2031</td><td>LAMSAMA</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/04/Sertifikat_lamsama-S3-Matematika.pdf">Sertifikat</a></td></tr>
                 <tr><td>144</td><td>62001</td><td>Ilmu Akuntansi</td><td>S3</td><td>Baik</td><td>065/DE/A.5/AR.11/XI/2023</td><td>8/11/2023 - 8-11-2028</td><td>LAMEMBA</td><td>Sertifikat</td></tr>
                 <tr><td>145</td><td>25001</td><td>Teknik Lingkungan</td><td>S3</td><td>Baik</td><td>0520/SK/LAMTeknik/AD/VIII/2024</td><td>14/8/2024 - 14/8/2026</td><td>LAM-Teknik</td><td>Sertifikat</td></tr>
-                <tr><td>146</td><td>13702</td><td>Gizi Klinis</td><td>Sp-1</td><td>Terakreditasi</td><td>006/LAM-PTKes/Akr PSB.PTN-BH/Spe/2024</td><td>-</td><td>LAMPT-Kes</td><td></td></tr>
-                <tr><td>147</td><td>11776</td><td>Urologi</td><td>Sp-1</td><td>Terakreditasi</td><td>00/LAM-PTKes/Akr PSB.PTN-BH/Spe/2024</td><td></td><td>LAMPT-Kes</td><td></td></tr>
-                <tr><td>148</td><td>11732</td><td>Linguistik</td><td>S3</td><td>Terakreditasi</td><td></td><td></td><td>BAN-PT</td><td></td></tr>
-                <tr><td>149</td><td>79003</td><td>Statistika dan Sains Data</td><td>S1</td><td>Terakreditasi</td><td></td><td></td><td>BAN-PT</td><td></td></tr>
-                <tr><td>150</td><td>49205</td><td>Bedah</td><td>Sp-2</td><td>Terakreditasi</td><td></td><td></td><td>LAMPT-Kes</td><td></td></tr>
-                <tr><td>151</td><td>12709</td><td>Bedah Mulut dan Maksilofasial</td><td>Sp-1</td><td>Terakreditasi</td><td></td><td></td><td>LAMPT-Kes</td><td></td></tr>
-                <tr><td>152</td><td>81201</td><td>Arkeologi</td><td>S1</td><td>Terakreditasi</td><td></td><td></td><td>BAN-PT</td><td></td></tr>
-                <tr><td>153</td><td>54240</td><td>Nutrisi dan Teknologi Pakan Ternak</td><td>S1</td><td>Terakreditasi</td><td></td><td></td><td>BAN-PT</td><td></td></tr>
-                <tr><td>154</td><td>73901</td><td>Pendidikan Profesi Psikologi </td><td>Profesi</td><td>Terakreditasi</td><td></td><td></td><td>BAN-PT</td><td>Proses di LAMDIK</td></tr>
+                <tr><td>146</td><td>13702</td><td>Gizi Klinis</td><td>Sp-1</td><td>Terakreditasi Pertama</td><td>006/LAM-PTKes/Akr PSB.PTN-BH/Spe/2024</td><td>-</td><td>LAMPT-Kes</td><td></td></tr>
+                <tr><td>147</td><td>11776</td><td>Urologi</td><td>Sp-1</td><td>Terakreditasi Pertama</td><td>00/LAM-PTKes/Akr PSB.PTN-BH/Spe/2024</td><td></td><td>LAMPT-Kes</td><td></td></tr>
+                <tr><td>148</td><td>11732</td><td>Linguistik</td><td>S3</td><td>Terakreditasi Pertama</td><td></td><td></td><td>BAN-PT</td><td></td></tr>
+                <tr><td>149</td><td>79003</td><td>Statistika dan Sains Data</td><td>S1</td><td>Terakreditasi Pertama</td><td></td><td></td><td>BAN-PT</td><td></td></tr>
+                <tr><td>150</td><td>49205</td><td>Bedah</td><td>Sp-2</td><td>Terakreditasi Pertama</td><td></td><td></td><td>LAMPT-Kes</td><td></td></tr>
+                <tr><td>151</td><td>12709</td><td>Bedah Mulut dan Maksilofasial</td><td>Sp-1</td><td>Terakreditasi Pertama</td><td></td><td></td><td>LAMPT-Kes</td><td></td></tr>
+                <tr><td>152</td><td>81201</td><td>Arkeologi</td><td>S1</td><td>Terakreditasi Pertama</td><td></td><td></td><td>BAN-PT</td><td></td></tr>
+                <tr><td>153</td><td>54240</td><td>Nutrisi dan Teknologi Pakan Ternak</td><td>S1</td><td>Terakreditasi Pertama</td><td></td><td></td><td>BAN-PT</td><td></td></tr>
+                <tr><td>154</td><td>73901</td><td>Pendidikan Profesi Psikologi </td><td>Profesi</td><td>Terakreditasi Pertama</td><td></td><td></td><td>BAN-PT</td><td>Proses di LAMDIK</td></tr>
             </tbody>
         </table>
         `;
@@ -333,7 +346,7 @@
             'Unggul': '#10b981', 'A': '#34d399',
             'Baik Sekali': '#3b82f6', 'B': '#60a5fa',
             'Baik': '#f59e0b',
-            'Terakreditasi': '#8b5cf6', 'Terakreditasi Pertama': '#a78bfa'
+            'Terakreditasi Pertama': '#a78bfa'
         };
 
         const MASA_COLORS = {
@@ -352,6 +365,7 @@
         let filterJenjang = 'All';
         let filterPeringkat = 'All';
         let filterLembaga = 'All';
+        let filterMasa = 'All';
 
         // Chart Instances
         let chartPeringkat, chartJenjang, chartMasaBerlaku;
@@ -558,7 +572,16 @@
                 acc[item.peringkat] = (acc[item.peringkat] || 0) + 1;
                 return acc;
             }, {});
-            const sortedPeringkatKeys = Object.keys(peringkatCounts).sort((a,b) => peringkatCounts[b] - peringkatCounts[a]);
+            
+            const PREDEFINED_PERINGKAT_ORDER = ['Unggul', 'Baik Sekali', 'Baik', 'A', 'B', 'Terakreditasi Pertama'];
+            const sortedPeringkatKeys = Object.keys(peringkatCounts).sort((a, b) => {
+                let indexA = PREDEFINED_PERINGKAT_ORDER.indexOf(a);
+                let indexB = PREDEFINED_PERINGKAT_ORDER.indexOf(b);
+                if(indexA === -1) indexA = 999;
+                if(indexB === -1) indexB = 999;
+                return indexA - indexB;
+            });
+            
             chartPeringkat.data.labels = sortedPeringkatKeys;
             chartPeringkat.data.datasets[0].data = sortedPeringkatKeys.map(k => peringkatCounts[k]);
             chartPeringkat.data.datasets[0].backgroundColor = sortedPeringkatKeys.map(k => COLORS[k] || DEFAULT_COLOR);
@@ -648,7 +671,8 @@
                 const matchJenjang = filterJenjang === 'All' || item.jenjang === filterJenjang;
                 const matchPeringkat = filterPeringkat === 'All' || item.peringkat === filterPeringkat;
                 const matchLembaga = filterLembaga === 'All' || item.lembaga === filterLembaga;
-                return matchSearch && matchJenjang && matchPeringkat && matchLembaga;
+                const matchMasa = filterMasa === 'All' || item.statusMasa === filterMasa;
+                return matchSearch && matchJenjang && matchPeringkat && matchLembaga && matchMasa;
             });
             renderTable();
             
@@ -691,6 +715,17 @@
                 selectLembagaEl.appendChild(opt);
             });
 
+            // Setup Filter Masa Berlaku
+            const selectMasaEl = document.getElementById('filterMasa');
+            const masaOrder = ['Berlaku > 1 Tahun', 'Berakhir Tahun Ini', 'Kadaluarsa', 'Tidak Diketahui'];
+            const uniqueMasa = Array.from(new Set(data.map(item => item.statusMasa))).filter(m => m !== '');
+            uniqueMasa.sort((a, b) => masaOrder.indexOf(a) - masaOrder.indexOf(b)).forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m;
+                opt.textContent = m;
+                selectMasaEl.appendChild(opt);
+            });
+
             // Init Dashboard & Render Table
             initCharts();
             applyFilters(); // This will trigger renderTable, updateCards, and updateCharts initially
@@ -713,6 +748,11 @@
 
             document.getElementById('filterLembaga').addEventListener('change', (e) => {
                 filterLembaga = e.target.value;
+                applyFilters();
+            });
+
+            document.getElementById('filterMasa').addEventListener('change', (e) => {
+                filterMasa = e.target.value;
                 applyFilters();
             });
         });
