@@ -122,11 +122,15 @@
 
         <!-- Dashboard Charts Section -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Bar Chart: Peringkat -->
+            <!-- Doughnut Chart: Peringkat -->
             <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5 lg:col-span-2">
                 <h3 class="text-lg font-semibold text-slate-800 mb-4">Distribusi Peringkat Akreditasi</h3>
-                <div class="relative h-64 w-full">
+                <div class="relative h-64 w-full flex justify-center">
                     <canvas id="chartPeringkat"></canvas>
+                </div>
+                <!-- Custom Legend with Count & Percentage -->
+                <div id="legendPeringkat" class="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 border-t border-slate-100 pt-5">
+                    <!-- Legend items will be injected here -->
                 </div>
             </div>
             
@@ -481,33 +485,29 @@
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.color = '#64748b';
 
-            // Peringkat Bar Chart
+            // Peringkat Doughnut Chart
             const ctxPeringkat = document.getElementById('chartPeringkat').getContext('2d');
             chartPeringkat = new Chart(ctxPeringkat, {
-                type: 'bar',
-                data: { labels: [], datasets: [{ label: 'Jumlah Prodi', data: [], backgroundColor: [], borderRadius: 4 }] },
+                type: 'doughnut',
+                data: { labels: [], datasets: [{ data: [], backgroundColor: [], borderWidth: 0 }] },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
+                        legend: { display: false }, // Hide default legend to use custom below
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) { label += ': '; }
-                                    if (context.parsed.y !== null) { label += context.parsed.y; }
+                                    let label = context.label || '';
+                                    let value = context.parsed || 0;
                                     let total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    let percentage = ((context.parsed.y / total) * 100).toFixed(1) + '%';
-                                    return label + ` (${percentage})`;
+                                    let percentage = ((value / total) * 100).toFixed(1) + '%';
+                                    return ` ${label}: ${value} (${percentage})`;
                                 }
                             }
                         }
                     },
-                    scales: {
-                        y: { beginAtZero: true, ticks: { precision: 0 } },
-                        x: { grid: { display: false } }
-                    }
+                    cutout: '65%'
                 }
             });
 
@@ -586,6 +586,26 @@
             chartPeringkat.data.datasets[0].data = sortedPeringkatKeys.map(k => peringkatCounts[k]);
             chartPeringkat.data.datasets[0].backgroundColor = sortedPeringkatKeys.map(k => COLORS[k] || DEFAULT_COLOR);
             chartPeringkat.update();
+
+            // Render Custom Legend for Peringkat
+            const legendContainer = document.getElementById('legendPeringkat');
+            const totalPeringkat = currentData.length;
+            legendContainer.innerHTML = sortedPeringkatKeys.map(k => {
+                const count = peringkatCounts[k];
+                const percentage = totalPeringkat > 0 ? ((count / totalPeringkat) * 100).toFixed(1) : 0;
+                const color = COLORS[k] || DEFAULT_COLOR;
+                return `
+                    <div class="flex flex-col items-center justify-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <span class="w-3 h-3 rounded-full shadow-sm" style="background-color: ${color}"></span>
+                            <span class="font-semibold text-slate-600 text-[11px] uppercase tracking-wider text-center">${k}</span>
+                        </div>
+                        <div class="text-xl font-bold text-slate-800 mt-1">
+                            ${count} <span class="text-xs font-medium text-slate-500 ml-1">(${percentage}%)</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
 
             // Process Data for Masa Berlaku
             const masaCounts = currentData.reduce((acc, item) => {
