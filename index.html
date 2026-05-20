@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Akreditasi Universitas Andalas</title>
+    <title>Daftar Akreditasi Universitas Andalas</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Chart.js & Datalabels Plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -30,127 +29,130 @@
     <!-- Header -->
     <header class="bg-emerald-800 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="flex items-center space-x-4">
-                <div class="bg-white p-2 rounded-lg">
-                    <i data-lucide="shield-check" class="w-8 h-8 text-emerald-800"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold">Dashboard Akreditasi Program Studi</h1>
-                    <p class="text-emerald-100 text-sm mt-1">Universitas Andalas - Data Update: Januari 2026</p>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white p-2 rounded-lg">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-emerald-800"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">Daftar Akreditasi Program Studi</h1>
+                        <p class="text-emerald-100 text-sm mt-1">Universitas Andalas - Data Update: Mei 2026</p>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         
-        <!-- KPI Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100 flex items-center space-x-4">
-                <div class="bg-emerald-100 p-3 rounded-full">
-                    <i data-lucide="book-open" class="w-6 h-6 text-emerald-600"></i>
+        <!-- Dashboard Summary Cards Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5 flex items-center space-x-4">
+                <div class="p-3 bg-blue-50 text-blue-600 rounded-lg">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                 </div>
                 <div>
                     <p class="text-sm text-slate-500 font-medium">Total Program Studi</p>
-                    <h3 id="kpi-total" class="text-2xl font-bold text-slate-800">0</h3>
+                    <h3 id="statTotal" class="text-2xl font-bold text-slate-800">0</h3>
                 </div>
             </div>
-
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100 flex items-center space-x-4">
-                <div class="bg-blue-100 p-3 rounded-full">
-                    <i data-lucide="award" class="w-6 h-6 text-blue-600"></i>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5 flex items-center space-x-4">
+                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-lg">
+                    <i data-lucide="award" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-sm text-slate-500 font-medium">Akreditasi Unggul & A</p>
-                    <h3 id="kpi-unggul" class="text-2xl font-bold text-slate-800">0</h3>
+                    <p class="text-sm text-slate-500 font-medium">Unggul / A</p>
+                    <h3 id="statUnggul" class="text-2xl font-bold text-slate-800">0</h3>
                 </div>
             </div>
-
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100 flex items-center space-x-4">
-                <div class="bg-amber-100 p-3 rounded-full">
-                    <i data-lucide="check-circle" class="w-6 h-6 text-amber-600"></i>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5 flex items-center space-x-4">
+                <div class="p-3 bg-red-50 text-red-600 rounded-lg">
+                    <i data-lucide="alert-triangle" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-sm text-slate-500 font-medium">Akreditasi Baik Sekali & B</p>
-                    <h3 id="kpi-baik" class="text-2xl font-bold text-slate-800">0</h3>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100 flex items-center space-x-4">
-                <div class="bg-purple-100 p-3 rounded-full">
-                    <i data-lucide="building-2" class="w-6 h-6 text-purple-600"></i>
-                </div>
-                <div class="overflow-hidden w-full">
-                    <p class="text-sm text-slate-500 font-medium">Lembaga Terbanyak</p>
-                    <h3 id="kpi-lembaga" class="text-lg font-bold text-slate-800 truncate">-</h3>
+                    <p class="text-sm text-slate-500 font-medium">Perlu Perhatian (Expired / Tahun Ini)</p>
+                    <h3 id="statPerhatian" class="text-2xl font-bold text-slate-800">0</h3>
                 </div>
             </div>
         </div>
 
-        <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Pie Chart -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col">
+        <!-- Dashboard Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Bar Chart: Peringkat -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5 lg:col-span-2">
                 <h3 class="text-lg font-semibold text-slate-800 mb-4">Distribusi Peringkat Akreditasi</h3>
-                <div class="flex-1 relative min-h-[300px] w-full flex items-center justify-center">
-                    <canvas id="pieChart"></canvas>
+                <div class="relative h-64 w-full">
+                    <canvas id="chartPeringkat"></canvas>
+                </div>
+            </div>
+            
+            <!-- Doughnut Chart: Masa Berlaku -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5">
+                <h3 class="text-lg font-semibold text-slate-800 mb-4">Status Masa Berlaku</h3>
+                <div class="relative h-64 w-full flex justify-center">
+                    <canvas id="chartMasaBerlaku"></canvas>
                 </div>
             </div>
 
-            <!-- Bar Chart - Jenjang -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col">
-                <h3 class="text-lg font-semibold text-slate-800 mb-4">Akreditasi Berdasarkan Jenjang</h3>
-                <div class="flex-1 relative min-h-[300px] w-full">
-                    <canvas id="barJenjang"></canvas>
-                </div>
-            </div>
-
-            <!-- Bar Chart - Lembaga -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col">
-                <h3 class="text-lg font-semibold text-slate-800 mb-4">Akreditasi Berdasarkan Lembaga</h3>
-                <div class="flex-1 relative min-h-[300px] w-full">
-                    <canvas id="barLembaga"></canvas>
+            <!-- Doughnut Chart: Jenjang -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-5">
+                <h3 class="text-lg font-semibold text-slate-800 mb-4">Komposisi Jenjang</h3>
+                <div class="relative h-64 w-full flex justify-center">
+                    <canvas id="chartJenjang"></canvas>
                 </div>
             </div>
         </div>
 
         <!-- Data Table Section -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-            <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <h3 class="text-lg font-semibold text-slate-800 flex items-center">
-                    <i data-lucide="graduation-cap" class="w-5 h-5 mr-2 text-emerald-600"></i>
-                    Daftar Program Studi
-                </h3>
-                
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <!-- Search -->
-                    <div class="relative">
-                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                        <input type="text" id="searchInput" placeholder="Cari prodi atau kode..." class="pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-64" />
-                    </div>
-
+            <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+                <h3 class="text-lg font-semibold text-slate-800 mb-4">Detail Data Akreditasi</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <!-- Filter -->
                     <div class="relative">
                         <i data-lucide="filter" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                        <select id="filterSelect" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full sm:w-auto">
+                        <select id="filterSelect" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
                             <option value="All">Semua Jenjang</option>
                         </select>
+                    </div>
+
+                    <!-- Filter Peringkat -->
+                    <div class="relative">
+                        <i data-lucide="award" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                        <select id="filterPeringkat" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
+                            <option value="All">Semua Peringkat</option>
+                        </select>
+                    </div>
+
+                    <!-- Filter Lembaga -->
+                    <div class="relative">
+                        <i data-lucide="building" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                        <select id="filterLembaga" class="pl-9 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none bg-white cursor-pointer w-full">
+                            <option value="All">Semua Lembaga</option>
+                        </select>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="relative">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                        <input type="text" id="searchInput" placeholder="Cari prodi atau kode..." class="pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full" />
                     </div>
                 </div>
             </div>
 
-            <div class="overflow-x-auto h-[500px] table-container relative">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-slate-50 sticky top-0 z-10 shadow-sm">
+            <div class="overflow-x-auto min-h-[400px] max-h-[600px] table-container relative">
+                <table class="w-full text-left border-collapse table-fixed">
+                    <thead class="bg-slate-100 sticky top-0 z-10 shadow-sm">
                         <tr>
-                            <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">No.</th>
-                            <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Kode</th>
-                            <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Program Studi</th>
-                            <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Jenjang</th>
-                            <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Peringkat</th>
-                            <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Lembaga</th>
-                            <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Masa Berlaku</th>
-                            <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center">Sertifikat</th>
+                            <th class="px-3 py-3 w-12 text-xs font-semibold text-slate-600 uppercase tracking-wider">No.</th>
+                            <th class="px-3 py-3 w-20 text-xs font-semibold text-slate-600 uppercase tracking-wider">Kode</th>
+                            <th class="px-3 py-3 w-48 text-xs font-semibold text-slate-600 uppercase tracking-wider">Program Studi</th>
+                            <th class="px-3 py-3 w-20 text-xs font-semibold text-slate-600 uppercase tracking-wider">Jenjang</th>
+                            <th class="px-3 py-3 w-24 text-xs font-semibold text-slate-600 uppercase tracking-wider">Peringkat</th>
+                            <th class="px-3 py-3 w-48 text-xs font-semibold text-slate-600 uppercase tracking-wider">No. SK</th>
+                            <th class="px-3 py-3 w-24 text-xs font-semibold text-slate-600 uppercase tracking-wider">Lembaga</th>
+                            <th class="px-3 py-3 w-40 text-xs font-semibold text-slate-600 uppercase tracking-wider">Masa Berlaku</th>
+                            <th class="px-3 py-3 w-24 text-xs font-semibold text-slate-600 uppercase tracking-wider text-center">Sertifikat</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="divide-y divide-slate-100 bg-white">
@@ -158,16 +160,13 @@
                     </tbody>
                 </table>
             </div>
-            <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
-                <p id="tableInfo" class="text-xs text-slate-500">Menampilkan 0 dari 0 Program Studi</p>
+            <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
+                <p id="tableInfo" class="text-xs text-slate-500 font-medium">Menampilkan 0 dari 0 Program Studi</p>
             </div>
         </div>
     </main>
 
     <script>
-        // Register Chart.js DataLabels plugin
-        Chart.register(ChartDataLabels);
-
         const rawHTMLData = `
         <table>
             <tbody>
@@ -175,26 +174,26 @@
                 <tr><td>1</td><td>62401</td><td>Akuntansi</td><td>D3</td><td>Unggul</td><td>1345/DE/A.5/AR.10/VII/2024</td><td>12/07/2024 – 12/07/2029</td><td>LAMEMBA</td><td><a href="https://drive.google.com/file/d/1dWNnbcZpCqcpSltBpOHeZPH9KeOW4be9/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>2</td><td>61404</td><td>Manajemen Pemasaran</td><td>D3</td><td>Unggul</td><td>437/DE/A.5/AR.10/V/2023</td><td>6/6/2023  -  6/6/2028</td><td>LAMEMBA</td><td><a href="https://drive.google.com/file/d/15X7TCO9ml-mWXQHua-1j54F1c4e6m696/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>3</td><td>61417</td><td>Perbankan dan Keuangan</td><td>D3</td><td>Baik Sekali</td><td>1290/DE/A.5/AR.10/VI/2024</td><td>6/28/2024 – 6/28/2029</td><td>LAMEMBA</td><td><a href="https://drive.google.com/file/d/1_sUQGdNUAgnONWiXnCM1I2__PXY0AaUL/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>4</td><td>63412</td><td>Administrasi Perkantoran</td><td>D3</td><td>Unggul</td><td>255/DE/A.5/AR.10/III/2023</td><td>02/05/2023 – 02/05/2028</td><td>LAMEMBA</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2026/01/D3-Administrasi-Perkantoran.jpeg">Sertifikat</a></td></tr>
+                <tr><td>4</td><td>63412</td><td>Administrasi Perkantoran</td><td>D3</td><td>Unggul</td><td>255/DE/A.5/AR.10/III/2023</td><td>02/05/2023 – 02/05/2028</td><td>LAMEMBA</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/01/D3-Administrasi-Perkantoran.jpeg">Sertifikat</a></td></tr>
                 <tr><td>5</td><td>13201</td><td>Kesehatan Masyarakat</td><td>S1</td><td>Unggul</td><td>1111/LAM-PTKes/Akr/Sar/XII/2024</td><td>18/12/2024 – 18/15/2029</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
-                <tr><td>6</td><td>54294</td><td>Ilmu Tanah</td><td>S1</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2026/01/SK-S1-ILMU-TANAH.pdf">7962/SK/BAN-PT/Ak.KP/S/X/2025</a></td><td>15/10/2025 – 01/08/2028</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2026/01/SERTIFIKAT-S1-ILMU-TANAH.pdf">Sertifikat</a></td></tr>
+                <tr><td>6</td><td>54294</td><td>Ilmu Tanah</td><td>S1</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/01/SK-S1-ILMU-TANAH.pdf">7962/SK/BAN-PT/Ak.KP/S/X/2025</a></td><td>15/10/2025 – 01/08/2028</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/01/SERTIFIKAT-S1-ILMU-TANAH.pdf">Sertifikat</a></td></tr>
                 <tr><td>7</td><td>46201</td><td>Biologi</td><td>S1</td><td>Unggul</td><td><a href="https://drive.google.com/file/d/1sqE80RhJCQTrKn8RE3BOJhVHj82fjGIf/view">024/SK/LAMSAMA/Akred/S/XII/2022</a></td><td>13/12/2022 – 13/12/2027</td><td>LAMSAMA</td><td>Sertifikat</td></tr>
                 <tr><td>8</td><td>45201</td><td>Fisika</td><td>S1</td><td>A</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-40100-1b572fc9a7c8e5f594c607991c8a1807.pdf">8855/SK/BAN-PT/Ak-PPJ/S/VI/2021</a></td><td>18/06/2021 – 18/06/2026</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1qsA-fuL9uEwIET-zKOFk0pImMJp65cB5/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>9</td><td>47201</td><td>Kimia</td><td>S1</td><td>Unggul</td><td>008/SK/LAMSAMA/UIA/S/III/2026</td><td>30/03/2026 – 16/08/2027</td><td>LAMSAMA</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2026/04/69cb2f534ef1b_sertifikat_lamsama.pdf">Sertifikat</a></td></tr>
+                <tr><td>9</td><td>47201</td><td>Kimia</td><td>S1</td><td>Unggul</td><td>008/SK/LAMSAMA/UIA/S/III/2026</td><td>30/03/2026 – 16/08/2027</td><td>LAMSAMA</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/04/69cb2f534ef1b_sertifikat_lamsama.pdf">Sertifikat</a></td></tr>
                 <tr><td>10</td><td>22201</td><td>Teknik Sipil</td><td>S1</td><td>Unggul</td><td>0031/SK/LAMTeknik/AS/IV/2023</td><td>21/04/2023 – 20/04/2028</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1OpZhV3AWJTRpqouFF68MkrP3aWj88a1y/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>11</td><td>69201</td><td>Sosiologi</td><td>S1</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-71860-cf17055f2e8a7c3868fbb09b1f7156b4.pdf">4920/SK/BAN-PT/Ak.KP/S/XI/2023</a></td><td>28/0311/2023 – 22/03/2027</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/15pNmQRXIpSraPFHPXOcEnalPe0DTzIe5/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>12</td><td>61201</td><td>Manajemen</td><td>S1</td><td>Unggul</td><td>003/DE/A.5/AR.10/IX/2022</td><td>19/09/2022 – 19/09/2027</td><td>Lamemba</td><td><a href="https://drive.google.com/file/d/1JmilWYV2COnXDHCURYBntgb8KitaBuRZ/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>13</td><td>74207</td><td>Hukum</td><td>S1</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-88209-abb7f41a4f4463023aa53c6d6473ab9a_sign.pdf">6334/SK/BAN-PT/Ak.KP/S/V/2025</a></td><td>06/05/2025 – 26/06/2029</td><td>BAN-PT</td><td><a href="https://uandalas-my.sharepoint.com/:b:/g/personal/ke_lpm_unand_ac_id/EdMWigUdKrZEtARy2hkbxFQBTsLZyFjmITiAv6yvvBiLDQ?e=rBGs4k">Sertifikat</a></td></tr>
-                <tr><td>14</td><td>11201</td><td>Kedokteran</td><td>S1</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-akreditasi-Prodi-Sarjana-Kedokteran.pdf">0683/LAM-PTKes/Akr/Sar/VIII/2022</a></td><td>09/09/2021 – 09/09/2026</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/683-100-Sertifikat_Sarjana_-_KEDOKTERAN_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
+                <tr><td>14</td><td>11201</td><td>Kedokteran</td><td>S1</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-akreditasi-Prodi-Sarjana-Kedokteran.pdf">0683/LAM-PTKes/Akr/Sar/VIII/2022</a></td><td>09/09/2021 – 09/09/2026</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/683-100-Sertifikat_Sarjana_-_KEDOKTERAN_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
                 <tr><td>15</td><td>60201</td><td>Ekonomi </td><td>S1</td><td>Unggul</td><td>084/DE/A.5/AR.10/XII/2022</td><td>12/12/2022 – 12/12/2027</td><td>Lamemba</td><td><a href="https://drive.google.com/file/d/1zzhNLXyMvX_0iMj7KjAKtPWslc2m9Uui/view?usp=share_link"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>16</td><td>54211</td><td>Agroteknologi</td><td>S1</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SSK-Prodi-S1-Agroteknologi.pdf">7830/SK/BAN-PT/Ak.KP/S/X/2025</a></td><td>26/08/2025 – 26/08/2030</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SSertifikat-Prodi-S1-Agroteknologi.pdf">Sertifikat</a></td></tr>
+                <tr><td>16</td><td>54211</td><td>Agroteknologi</td><td>S1</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SSK-Prodi-S1-Agroteknologi.pdf">7830/SK/BAN-PT/Ak.KP/S/X/2025</a></td><td>26/08/2025 – 26/08/2030</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SSertifikat-Prodi-S1-Agroteknologi.pdf">Sertifikat</a></td></tr>
                 <tr><td>17</td><td>44201</td><td>Matematika</td><td>S1</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-54270-d926afd5f37306b9f02fc18a0b28fc36.pdf">1143/SK/BAN-PT/Ak.KP/S/III/2023</a></td><td>28/03/2023 – 28/03/2026</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1BrYIXEAkTrTQZYudrUCsxYjTWxPZTYtP/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>18</td><td>82201</td><td>Antropologi Sosial</td><td>S1</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-82848-c1f5ca9fb1a3aec3a3f0f1a413d8b927_sign.pdf">5140/SK/BAN-PT/Ak.Ppj/S/VII/2024</a></td><td>7/08/2024 – 07/08/2029</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1zX12h8VY59hp_kgn7ioQfS3VaSyPpxDx/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>19</td><td>54231</td><td>Peternakan</td><td>S1</td><td>A</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-66928-74e97391f0a90562e95e2c7153cfec79.pdf">9714/SK/BAN-PT/Ak.Ppj/S/XI/2022</a></td><td>06/12/2022 – 06/12/2027</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1XW5p_K5ubu8JwAF4krIJ7LAlAcsxQaIW/view?usp=share_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>20</td><td>80204</td><td>Sejarah</td><td>S1</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-75349-3a31c3d4b93105b3677d003c73f75dde.pdf">4777/SK/BAN-PT/Ak-PNB/S/XI/2023</a></td><td>12/07/2022 – 12/07/2027</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/19TFsZ1rko4hdSK6NbBo7gvLy2RPDhPno/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>21</td><td>80203</td><td>Teknik Pertanian dan Biosistem</td><td>S1</td><td>A</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-87406-c35bdb43069deb04e2599c6801b79965_sign.pdf">6978/SK/BAN-PT/Ak-PNB/S/XII/2024</a></td><td>13/06/2023 – 27/06/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1SAZYAbC6G1_K32ByLTyjdx9Az8im3_hh/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>22</td><td>20201</td><td>Teknik Elektro</td><td>S1</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/SK-Akreditasi-S1-TE.pdf">0212/SK/LAM Teknik/AS/IV/2025</a></td><td>21/04/2025 – 20/04/2030</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1L60gyNps_chlezbxijstarADOdlhOfEP/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>23</td><td>54201</td><td>Agribisnis</td><td>S1</td><td>Unggul</td><td><a href="https://sapto2.banpt.or.id/histori_prodi/Akreditasi/detail?tipe=open_file&amp;file=af395574c88ea60e55984d3fc22d4b7357533cbff71aae6b777008f07c5b5753a4d9795e57b2c61b4b0bd46de785811d9a6abcf8abe007825e410e861f4541f9CqAAaIkS3dcgASpgoi4Wvug6jIA8JzpA3q5TenS_lt2p-k_Df3tX-34Bxm_6QAe0AbZGcSopgB6DTrXY1U472g&amp;kode=664a313d4354ab1fb8834cb8045862fc3b47f0d5dd52f018493e264de010c3d174fe7d9bbe1123f9aa379f200306d6226fdd556a491a5abf58658ef190b79cc20HsVI8YPJtn_Y4lW3ImsHASIrJlkNTeCbeIFQlUf-gs">6932/SK/BAN-PT/Ak.KP/S1/VII/2025</a></td><td>01/07/2025 – 02/08/2027</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S1-AGRIBISNIS.pdf">Sertifikat</a></td></tr>
+                <tr><td>22</td><td>20201</td><td>Teknik Elektro</td><td>S1</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/SK-Akreditasi-S1-TE.pdf">0212/SK/LAM Teknik/AS/IV/2025</a></td><td>21/04/2025 – 20/04/2030</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1L60gyNps_chlezbxijstarADOdlhOfEP/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
+                <tr><td>23</td><td>54201</td><td>Agribisnis</td><td>S1</td><td>Unggul</td><td><a href="https://sapto2.banpt.or.id/histori_prodi/Akreditasi/detail?tipe=open_file&amp;file=af395574c88ea60e55984d3fc22d4b7357533cbff71aae6b777008f07c5b5753a4d9795e57b2c61b4b0bd46de785811d9a6abcf8abe007825e410e861f4541f9CqAAaIkS3dcgASpgoi4Wvug6jIA8JzpA3q5TenS_lt2p-k_Df3tX-34Bxm_6QAe0AbZGcSopgB6DTrXY1U472g&amp;kode=664a313d4354ab1fb8834cb8045862fc3b47f0d5dd52f018493e264de010c3d174fe7d9bbe1123f9aa379f200306d6226fdd556a491a5abf58658ef190b79cc20HsVI8YPJtn_Y4lW3ImsHASIrJlkNTeCbeIFQlUf-gs">6932/SK/BAN-PT/Ak.KP/S1/VII/2025</a></td><td>01/07/2025 – 02/08/2027</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S1-AGRIBISNIS.pdf">Sertifikat</a></td></tr>
                 <tr><td>24</td><td>62201</td><td>Akuntansi</td><td>S1</td><td>Unggul</td><td>2692/DE/A.5/AR.10/VIII/2025</td><td>29/11/2025 - 29/11/2030</td><td>LAMEMBA</td><td><a href="https://uandalas-my.sharepoint.com/:i:/g/personal/ke_lpm_unand_ac_id/ESx8jeimSvlIhn84exOWUb8Bh7WE9sPXk0Q0idJWOUPrzg?e=C07C7z">Sertifikat</a></td></tr>
                 <tr><td>25</td><td>48201</td><td>Farmasi</td><td>S1</td><td>Unggul</td><td>0723/LAM-PTKes/Akr/Sar/VIII/2022</td><td>25/08/2022 – 25/08/2027</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1RSWgxgC5trEQWJunLvatfbTXQyH3rO9G/view?usp=share_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>26</td><td>79204</td><td>Sastra Jepang</td><td>S1</td><td>A</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-55260-f61d3434c2efafe3b53695aa591f7676.pdf">2959/SK/BAN-PT/Ak-PPJ/S/V/2022</a></td><td>12/08/2021 – 12/08/2026</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/12MQ0Cczp06KxozTGtW3rB3d0O6urIi1g/view">Sertifikat</a></td></tr>
@@ -208,32 +207,32 @@
                 <tr><td>34</td><td>13211</td><td>Gizi</td><td>S1</td><td>Unggul</td><td>0794/LAM-PTKes/Akr/Sar/X/2023</td><td>26/10/2023 – 26/10/2028</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1I_fCsE9LG9x4exuBdWCFMlAIQcOJ_WZi/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>35</td><td>12201</td><td>Kedokteran Gigi</td><td>S1</td><td>Unggul</td><td>1095/LAM-PTKes/Akr/Sar/XII/2022</td><td>28/12/2022 – 28/12/2027</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
                 <tr><td>36</td><td>60270</td><td>Ekonomi Pembangunan (Kampus Payakumbuh)</td><td>S1</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-52671-de3ad26e224ea660b90d26879f7ffbc7.pdf">1772/SK/BAN-PT/Ak-PPJ/S/III/2022</a></td><td>30/03/2022 – 30/03/2027</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/164K8l0ps4wE8MQQbknznsu6L_ws_qxP_/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>37</td><td>54203</td><td>Penyuluhan Pertanian</td><td>S1</td><td>Baik Sekali</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-84642-a3c7791e1792560608f2601be5b58363_sign.pdf">7533/SK/BAN-PT/Ak/S/IX/2025</a></td><td>09/09/2025 - 09/09/2030</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S1-PENYULUHAN-PERTANIAN.pdf">Sertifikat</a></td></tr>
+                <tr><td>37</td><td>54203</td><td>Penyuluhan Pertanian</td><td>S1</td><td>Baik Sekali</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-84642-a3c7791e1792560608f2601be5b58363_sign.pdf">7533/SK/BAN-PT/Ak/S/IX/2025</a></td><td>09/09/2025 - 09/09/2030</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S1-PENYULUHAN-PERTANIAN.pdf">Sertifikat</a></td></tr>
                 <tr><td>38</td><td>54281</td><td>Agroekoteknologi</td><td>S1</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-50288-4900f3c96b9c7cfa502615072be6fc80.pdf">424/SK/BAN-PT/Ak-PPJ/S/I/2022</a></td><td>27/01/2022 – 27/01/2027</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1q97XEiV8bEbh6SwSnfRI2VxmISwf12KX/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>39</td><td>70201</td><td>Ilmu Komunikasi</td><td>S1</td><td>A</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-68876-1d5f2421fdc7300b3809fe6c74458d2c.pdf">496/SK/BAN-PT/Ak.Ppj/S/II/2023</a></td><td>04/01/2023 – 04/01/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1h_B7GpAWrMwhXsQIFr5MeAwclGAFDPII/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>40</td><td>84201</td><td>Hubungan Internasional</td><td>S1</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-75778-145f46b667039455e7f04f8a9c2e76c9.pdf">5049/SK/BAN-PT/Ak-PNB/S/XI/2023</a></td><td>01/08/2023 – 05/07/2027</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/11WkBVXll4HFsun-_orPmY6N8mGegUU4U/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>41</td><td>41231</td><td>Teknologi Pangan dan Hasil Pertanian</td><td>S1</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-67170-5d473d9d15dea4f028ba7831f09f8acb.pdf">10195/SK/BAN-PT/Ak-PNB/S/XII/2022</a></td><td>30/03/2022 – 30/03/2026</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1qr2bPh4iNAL3qJCtbMl46ZLN_zCa8Gsa/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>42</td><td>56201</td><td>Teknik Komputer</td><td>S1</td><td>Baik Sekali</td><td>137/SK/LAM-INFOKOM/Ak/S/XII/2022</td><td>23/12/2022 – 23/12/2027</td><td>LAM-Infokom</td><td><a href="https://drive.google.com/file/d/1XDxeJeF7hhEC5QtV6J6PegEeQyTikV60/view?usp=share_link"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>43</td><td>54295</td><td>Proteksi Tanaman</td><td>S1</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-70110-3bcbf812303a7f7b161925e06aad7bc9_sign.pdf">356/SK/BAN-PT/Ak/S/II/2024</a></td><td>06/02/2024 – 06/02/2029</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S1-PROTEKSI-TANAMAN.pdf">Sertifikat</a></td></tr>
+                <tr><td>43</td><td>54295</td><td>Proteksi Tanaman</td><td>S1</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-70110-3bcbf812303a7f7b161925e06aad7bc9_sign.pdf">356/SK/BAN-PT/Ak/S/II/2024</a></td><td>06/02/2024 – 06/02/2029</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S1-PROTEKSI-TANAMAN.pdf">Sertifikat</a></td></tr>
                 <tr><td>44</td><td>79211</td><td>Sastra Minangkabau</td><td>S1</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-41381-494ef57b20cdf0dd8d7402923cafde15.pdf">9594/SK/BAN-PT/Ak-PPJ/S/VII/2021</a></td><td>22/07/2021 – 22/07/2026</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1HJ8vcz89g7bZ8n40LMB2EgrdW4GsGPq9/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>45</td><td>15201</td><td>Kebidanan</td><td>S1</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Prodi-Kebidanan-Program-Sarjana-2025-2030-2.pdf">0176/LAM-PTKes/Akr/Sar/II/2025</a></td><td>28/02/2025 – 28/02/2030</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/0176-159-Sertifikat_Sarjana_-_KEBIDANAN_-_UNIVERSITAS_ANDALAS__PADANG-2.pdf">Sertifikat</a></td></tr>
-                <tr><td>46</td><td>73201</td><td>Psikologi</td><td>S1</td><td>B</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-Prodi-Spikologi-S1-1.pdf">12970/SK/BAN-PT/Ak-PPJ/S/XII/2021</a></td><td>02/12/2021 – 02/12/2026</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SERTIFIKAT-AKREDITASI-BAN-PT-S1-PSIKOLOGI-PERIODE-2021-2026.pdf">Sertifikat</a></td></tr>
-                <tr><td>47</td><td>63203</td><td>Administrasi Publik</td><td>S1</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-75347-2d1bf1bb3f7b4a0e5febf6311270ab80.pdf">4789/SK/BAN-PT/Ak-PNB/S/XI/2023</a></td><td>26/04/2022 – 26/04/2027</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S1-ADMINISTRASI-PUBLIK.pdf">Sertifikat</a></td></tr>
+                <tr><td>45</td><td>15201</td><td>Kebidanan</td><td>S1</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Prodi-Kebidanan-Program-Sarjana-2025-2030-2.pdf">0176/LAM-PTKes/Akr/Sar/II/2025</a></td><td>28/02/2025 – 28/02/2030</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/0176-159-Sertifikat_Sarjana_-_KEBIDANAN_-_UNIVERSITAS_ANDALAS__PADANG-2.pdf">Sertifikat</a></td></tr>
+                <tr><td>46</td><td>73201</td><td>Psikologi</td><td>S1</td><td>B</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-Prodi-Spikologi-S1-1.pdf">12970/SK/BAN-PT/Ak-PPJ/S/XII/2021</a></td><td>02/12/2021 – 02/12/2026</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SERTIFIKAT-AKREDITASI-BAN-PT-S1-PSIKOLOGI-PERIODE-2021-2026.pdf">Sertifikat</a></td></tr>
+                <tr><td>47</td><td>63203</td><td>Administrasi Publik</td><td>S1</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-75347-2d1bf1bb3f7b4a0e5febf6311270ab80.pdf">4789/SK/BAN-PT/Ak-PNB/S/XI/2023</a></td><td>26/04/2022 – 26/04/2027</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S1-ADMINISTRASI-PUBLIK.pdf">Sertifikat</a></td></tr>
                 <tr><td>48</td><td>41211</td><td>Teknologi Industri Pertanian</td><td>S1</td><td>Baik</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-54201-3676cf5875d87f89568df8f1cf4a9e08.pdf">3224/SK/BAN-PT/Ak/S/VIII/2023</a></td><td>15/08/2023 – 15/08/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1bLEKarTkMI1W6rx3rCCzUugtAkX8FeCs/view?usp=drive_link">Sertifikat</a></td></tr>
-                <tr><td>49</td><td>11223</td><td>Ilmu Biomedis</td><td>S1</td><td>Baik Sekali</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Prodi-Ilmu-Biomedis-Program-Sarjana-2024-2029.pdf">0697/LAM-PTKes/Akr/Sar/IX/2024</a></td><td>27/09/2024 - 26/09/2029</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/0697-149-Sertifikat_Sarjana_-_ILMU_BIOMEDIS_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
+                <tr><td>49</td><td>11223</td><td>Ilmu Biomedis</td><td>S1</td><td>Baik Sekali</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Prodi-Ilmu-Biomedis-Program-Sarjana-2024-2029.pdf">0697/LAM-PTKes/Akr/Sar/IX/2024</a></td><td>27/09/2024 - 26/09/2029</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/0697-149-Sertifikat_Sarjana_-_ILMU_BIOMEDIS_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
                 <tr><td>50</td><td>21201</td><td>Teknik Mesin</td><td>S1</td><td>Unggul</td><td>0210/SK/LAM/ Teknik/AS/IV/2025</td><td>21/04/2025 – 20/04/2030</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/16lm6W1Qszy8AwXXnGATnJITewoW-I6tE/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>51</td><td>25201</td><td>Teknik Lingkungan</td><td>S1</td><td>Unggul</td><td>0103/SK/LAM Teknik/AS/IV/2025</td><td>21/4/2025 – 20/4/2030</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1nX6cOrBWLJFOBZFrpeGWLKDD-Uxl3G1Y/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>52</td><td>26201</td><td>Teknik Industri</td><td>S1</td><td>Unggul</td><td>0211/SK/LAM Teknik/AS/IV/2025</td><td>21/04/2025 – 20/04/2030</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/19eg7jvBuRVHgpJyFlmsNRtI1bwH-ikRD/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>53</td><td>55202</td><td>Informatika</td><td>S1</td><td>Baik</td><td>028/SK/LAM-INFOKOM/Ak.P/S/VIII/2024</td><td>09-08-2024 – 09-08-2029</td><td>LAM-Infokom</td><td>Sertifikat</td></tr>
-                <tr><td>54</td><td>23201</td><td>Arsitektur  </td><td>S1</td><td>Baik</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-74108-6176c1e989ca4c6272c0c37aa386cfa1_sign.pdf">40/SK/BAN-PT/Ak.P/S/I/2024</a></td><td>9/1/2024-9-1-2026</td><td>LAM-Teknik</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S1-ARSITEKTUR.pdf">Sertifikat</a></td></tr>
+                <tr><td>54</td><td>23201</td><td>Arsitektur  </td><td>S1</td><td>Baik</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-74108-6176c1e989ca4c6272c0c37aa386cfa1_sign.pdf">40/SK/BAN-PT/Ak.P/S/I/2024</a></td><td>9/1/2024-9-1-2026</td><td>LAM-Teknik</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S1-ARSITEKTUR.pdf">Sertifikat</a></td></tr>
                 <tr><td>55</td><td>60230</td><td>Ekonomi Islam</td><td>S1</td><td>Baik Sekali</td><td>2693/DE/A.5/AR.10/VIII/2025</td><td>25/08/2025 - 25/08/2030</td><td>LAMEMBA</td><td><a href="https://uandalas-my.sharepoint.com/:i:/g/personal/ke_lpm_unand_ac_id/ES8z0eX4rFJJpq7dh3uHz-8B1U1bKQE4U-Z9dhhhrqrb3g?e=b5Uc3T">Sertifikat</a></td></tr>
                 <tr><td>56</td><td>94202</td><td>Kewirausahaan</td><td>S1</td><td>Baik</td><td>064/DE/A.5/AR.11/XI/2023</td><td>8/11/2023 - 8-11-2028</td><td>LAMEMBA</td><td>Sertifikat</td></tr>
                 <tr><td>57</td><td>14901</td><td>Profesi Ners</td><td>Profesi</td><td>Unggul</td><td>0414/LAM-PTKes/Akr/Pro/VI/2024</td><td>27/06/2024 – 27/06/2029</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1FPfkMAcqneLGceDhtg6piFgo8g1K-ny9/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>58</td><td>48901</td><td>Profesi Apoteker</td><td>Profesi</td><td>Unggul</td><td>0724/LAM-PTKes/Akr/Pro/VIII/2022</td><td>25/08/2022 – 25/08/2027</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1IvrieG12JiW7TkfWd_nHyl5Yp7_Rf0MN/view?usp=share_link"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>59</td><td>11901</td><td>Profesi Dokter</td><td>Profesi</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-akreditasi-Prodi-Profesi-dokter.pdf">0684/LAM-PTKes/Akr/Pro/VIII/2022</a></td><td>09/09/2021 – 09/09/2026</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/684-100-Sertifikat_Profesi_-_DOKTER_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
+                <tr><td>59</td><td>11901</td><td>Profesi Dokter</td><td>Profesi</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-akreditasi-Prodi-Profesi-dokter.pdf">0684/LAM-PTKes/Akr/Pro/VIII/2022</a></td><td>09/09/2021 – 09/09/2026</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/684-100-Sertifikat_Profesi_-_DOKTER_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
                 <tr><td>60</td><td>62901</td><td>Profesi Akuntan</td><td>Profesi</td><td>Baik Sekali</td><td>514/DE/A.5/AR.10/VII/2023</td><td>05/07/2023 – 05/07/2028</td><td>Lamemba</td><td><a href="https://drive.google.com/file/d/1ouXSUdUuwRxg4FVgX19JmNAB_Raykzut/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>61</td><td>12901</td><td>Dokter Gigi</td><td>Profesi</td><td>Unggul</td><td>1096/LAM-PTKes/Akr /Pro/XII/2022</td><td>28/12/2022 – 28/12/2027</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
-                <tr><td>62</td><td>15901</td><td>Pendidikan Profesi Bidan</td><td>Profesi</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/03/SK-AKREDITASI-PENDIDIKAN-PROFESI-BIDAN-UNGGUL.pdf">0177/LAM/PT-Kes/Akr/Pro/II/2025</a></td><td>28/02/2025 – 28/02/2030</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/0177-159-Sertifikat_PENDIDIKAN_PROFESI_-_BIDAN_-_UNIVERSITAS_ANDALAS__PADANG-2.pdf">Sertifikat</a></td></tr>
+                <tr><td>62</td><td>15901</td><td>Pendidikan Profesi Bidan</td><td>Profesi</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/03/SK-AKREDITASI-PENDIDIKAN-PROFESI-BIDAN-UNGGUL.pdf">0177/LAM/PT-Kes/Akr/Pro/II/2025</a></td><td>28/02/2025 – 28/02/2030</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/0177-159-Sertifikat_PENDIDIKAN_PROFESI_-_BIDAN_-_UNIVERSITAS_ANDALAS__PADANG-2.pdf">Sertifikat</a></td></tr>
                 <tr><td>63</td><td>23905</td><td>Pendidikan Profesi Insinyur</td><td>Profesi</td><td>Baik Sekali</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-75346-62b2e240072818bd507938bc61a58205.pdf">4790/SK/BAN-PT/Ak-PNB/PP/XI/2023</a></td><td>22/11/2022 – 22/11/2027</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1V4fvffFdaVGOZHGCJXgP1NxY1WaNkp21/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>64</td><td>11708</td><td> Obstetri dan Ginekologi</td><td>Sp-1</td><td>Unggul</td><td><a href="https://drive.google.com/file/d/15x9QT86duFyh8JHkqATw9PgWvZz2KWuP/view?usp=drive_link">0159/LAM-PTKes/Akr/Spe/III/2023</a></td><td>10/03/2023 – 10/03/2028</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1FuXEstBbh2VzRuFyDKGEcsqBp2R15OA4/view">Sertifikat</a></td></tr>
                 <tr><td>65</td><td>11707</td><td>Bedah</td><td>Sp-1</td><td>Unggul</td><td><a href="https://drive.google.com/file/d/1AKOFckht4PoNIFHgZwqBpmbeWT7mKtij/view?usp=drive_link">0258/LAM-PTKes/Akr/Spe/IV/2023</a></td><td>13/04/2023– 13/04/2028</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1viyLnQMAliUzA6tVxwO-HppsvKyjL4Fd/view?usp=drive_link">Sertifikat</a></td></tr>
@@ -247,39 +246,39 @@
                 <tr><td>73</td><td>11715</td><td>Jantung dan Pembuluh Darah</td><td>Sp-1</td><td>Unggul</td><td>0799/LAM-PTKes/Akr/S/Spe/XI/2023</td><td>9/11/2023 – 9/11/2028</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1Q-7IvCesP36bZ7DQNSis8MI5WlOws2N7/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>74</td><td>11709</td><td>Pulmonologi dan Ilmu Kedokteran Respirasi</td><td>Sp-1</td><td>Unggul</td><td><a href="https://drive.google.com/file/d/1gjykTGTxFb7hHjoo1ESFl3uL1MSZbgq3/view?usp=drive_link">0869/LAM-PTKes/Akr/Spe/XII/2023</a></td><td>07/12/2023 – 07/12/2028</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/182pZnfFCkTXSdgdzpPnqBQaLPASFM-EX/view?usp=drive_link">Sertifikat</a></td></tr>
                 <tr><td>75</td><td>11718</td><td>Ilmu Patologi Anatomi</td><td>Sp-1</td><td>Unggul</td><td><a href="https://drive.google.com/file/d/1pJIiT1kPnfjC54rwpTqvkYZoCqhdA6eS/view?usp=drive_link">0135/LAM-PTKes/Akr/Spe/III/2024</a></td><td>14/03/2024 – 14/03/2029</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1jWtA5Thch1xV7PfBQm71Gqelgcdm2Usb/view">Sertifikat</a></td></tr>
-                <tr><td>76</td><td>11728</td><td>Orthopedi dan Traumatologi</td><td>Sp-1</td><td>Baik Sekali</td><td>0913/LAM-PTKes/Akr/Spe/XII/2023</td><td>21-12-2023-21-12-2028</td><td>LAMPT-Kes</td><td>&nbsp;–</td></tr>
-                <tr><td>77</td><td>11751</td><td>Anestesiologi dan Terapi Intensif</td><td>Sp-1</td><td>Baik</td><td>0240/LAM-PTKes/Akr.PB/Spe/XII/2023</td><td>19-2-2023-19-2-2025</td><td>LAMPT-Kes</td><td>&nbsp;–</td></tr>
+                <tr><td>76</td><td>11728</td><td>Orthopedi dan Traumatologi</td><td>Sp-1</td><td>Baik Sekali</td><td>0913/LAM-PTKes/Akr/Spe/XII/2023</td><td>21-12-2023-21-12-2028</td><td>LAMPT-Kes</td><td> </td></tr>
+                <tr><td>77</td><td>11751</td><td>Anestesiologi dan Terapi Intensif</td><td>Sp-1</td><td>Baik</td><td>0240/LAM-PTKes/Akr.PB/Spe/XII/2023</td><td>19-2-2023-19-2-2025</td><td>LAMPT-Kes</td><td> </td></tr>
                 <tr><td>78</td><td>11816</td><td>Obstetri dan Ginekologi Program Subspesialis</td><td>Sp-2</td><td>Baik Sekali</td><td>0303//LAM-TKes/Akr/SubSpe/V/2024 tgl 30 Mei 2024</td><td>29 Mei 2029</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
-                <tr><td>79</td><td>11734</td><td>Penyakit Dalam Program Subspesialis</td><td>Sp-2</td><td>Baik</td><td>013/LAM-PTKes/Akr.PB/SubSpe/I/2023</td><td>9 Mei 2024</td><td>LAMPT-Kes</td><td>&nbsp;–</td></tr>
+                <tr><td>79</td><td>11734</td><td>Penyakit Dalam Program Subspesialis</td><td>Sp-2</td><td>Baik</td><td>013/LAM-PTKes/Akr.PB/SubSpe/I/2023</td><td>9 Mei 2024</td><td>LAMPT-Kes</td><td> </td></tr>
                 <tr><td>80</td><td>95106</td><td>Ilmu Penyuluhan dan Komunikasi Pembangunan</td><td>S2</td><td>Baik Sekali</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-73413-e88c78248e65bcb028cf836e967d05eb_sign.pdf">4872/SK/BAN-PT/Ak/M/VII/2024</a></td><td>9/07/2024 – 9/07/2029</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/17hmgbB5kDY6NXAL4a5cw6PJLJnzqJvrR/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>81</td><td>44101</td><td>Matematika</td><td>S2</td><td>Unggul</td><td>100/SK/LAMSAMA/Akred/M/V/2025</td><td>15/05/2025 – 14/05/2026</td><td>LAMSAMA</td><td><a href="https://drive.google.com/file/d/1VrKMMNXi6jchV6fH9LR-Bwf0DvabIppj/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>82</td><td>21101</td><td>Teknik Mesin</td><td>S2</td><td>Baik Sekali</td><td>0748/SK/LAM Teknik/AM/XII/2024</td><td>21-12-2024 - 20-12-2029</td><td>LAM-Teknik</td><td>–</td></tr>
+                <tr><td>82</td><td>21101</td><td>Teknik Mesin</td><td>S2</td><td>Baik Sekali</td><td>0748/SK/LAM Teknik/AM/XII/2024</td><td>21-12-2024 - 20-12-2029</td><td>LAM-Teknik</td><td>-</td></tr>
                 <tr><td>83</td><td>63101</td><td>Administrasi Publik</td><td>S2</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-83171-205a0715a171ce822e78ab11361bb02d_sign.pdf">5196/SK/BAN-PT/Ak.Ppj/M/VII/2024</a></td><td>14/08/2024 – 14/08/2029</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/10B1V7Gn-ninMxueABzMO3a05JBJ4mbU4/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>84</td><td>79105</td><td>Susastra</td><td>S2</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-76292-f2d8fa66879143769d6d72b475d08086_sign.pdf">4645/SK/BAN-PT/Ak/M/VI/2024</a></td><td>11-06-2024 - 11-06-2029</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S2-SUSASTRA-1.pdf">Sertifikat</a></td></tr>
+                <tr><td>84</td><td>79105</td><td>Susastra</td><td>S2</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-76292-f2d8fa66879143769d6d72b475d08086_sign.pdf">4645/SK/BAN-PT/Ak/M/VI/2024</a></td><td>11-06-2024 - 11-06-2029</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S2-SUSASTRA-1.pdf">Sertifikat</a></td></tr>
                 <tr><td>85</td><td>95112</td><td>Pengelolaan  Sumber Daya Alam</td><td>S2</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-90895-8867eb0457b05a527abd166194b74b6d_sign.pdf">6579/SK/BAN-PT/Ak.S/M/V/2025</a></td><td>05/05/2020 – 05/05/2025</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1JGle9m9vRHuINDtlMwrXbVtcUrgc-82G/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>86</td><td>79104</td><td>Linguistik</td><td>S2</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-75353-b8a6b5f48ffd9e56a90604560fee4e1f.pdf">4785/SK/BAN-PT/Ak-PNB/M/XI/2023</a></td><td>06/12/2022 – 06/12/2027</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1NamS-RbVn-OP8zAEgxgyy2mndnf15TEH/view?usp=share_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>87</td><td>80102</td><td>Kajian Sejarah</td><td>S2</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-75776-642b196a5409f50190cc93b864dc4987.pdf">5051/SK/BAN-PT/Ak-PNB/M/XI/2023</a></td><td>07/11/2023 – 7/11/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/10dqBpO7IGkcyFWle8ZiWAvN-9e4eIMeQ/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>88</td><td>14101</td><td>Keperawatan</td><td>S2</td><td>Unggul</td><td>0023/LAM-PTKes/Akr/Mag/II/2021</td><td>25/02/2021 – 25/02/2026</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1-g9Bu5vkJW5WBXl4m0sdYTraHnKljzh3/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>89</td><td>54107</td><td>Bioteknologi</td><td>S2</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-67429-aa7c2c1b1e9290809a9822e196b00cdc.pdf">10378/SK/BAN-PT/Ak.Ppj/M/XII/2022</a></td><td>28/12/2022 – 28/12/2027</td><td>LAMPT-Kes</td><td><a href="https://drive.google.com/file/d/1aeUjlkuew8sw4kwABKY2Y47tR7xdvzx_/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>90</td><td>13101</td><td>Kesehatan Masyarakat</td><td>S2</td><td>Baik Sekali</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-LAM-PTKes-Prodi-Magister-Kesehatan-Ma-1.pdf">0126/LAM-PTKes/Akr/Mag/III/2024</a></td><td>28/02/2024 – 28/02/2029</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/0126-136-Sertifikat_MAGISTER_-_KESEHATAN_MASYARAKAT_-_UNIVERSITAS_ANDALAS__PADANG-.pdf">Sertifikat</a></td></tr>
+                <tr><td>90</td><td>13101</td><td>Kesehatan Masyarakat</td><td>S2</td><td>Baik Sekali</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-LAM-PTKes-Prodi-Magister-Kesehatan-Ma-1.pdf">0126/LAM-PTKes/Akr/Mag/III/2024</a></td><td>28/02/2024 – 28/02/2029</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/0126-136-Sertifikat_MAGISTER_-_KESEHATAN_MASYARAKAT_-_UNIVERSITAS_ANDALAS__PADANG-.pdf">Sertifikat</a></td></tr>
                 <tr><td>91</td><td>13111</td><td>Ilmu Gizi</td><td>S2</td><td>Baik Sekali</td><td>0892/LAM-PTKes/Akr/Mag/X/2024</td><td>20/05/2022-20/05/2027</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
                 <tr><td>92</td><td>25101</td><td>Teknik Lingkungan</td><td>S2</td><td>Unggul</td><td>0491/SK/LAM Teknik/AM/VIII/2024</td><td>21/08/2024 – 20/08/2029</td><td>LAM-Teknik</td><td>Sertifikat</td></tr>
                 <tr><td>93</td><td>82101</td><td>Antropologi</td><td>S2</td><td>Baik Sekali</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-75207-aa9cf8b982d1a31c6ee9f63a09a9b909_sign.pdf">4871/SK/BAN-PT/Ak/M/VII/2024</a></td><td>9/07/2024 – 9/07/2029</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1TTZGxVaRBOb1dE2lRLYy3DIOCorMlz4H/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>94</td><td>95136</td><td>Perumahan dan Pemukiman</td><td>S2</td><td>Baik</td><td><a href="https://sapto2.banpt.or.id/histori_prodi/Akreditasi/detail?tipe=open_file&amp;file=fb3f69ff1a9f814cb5a0eeabc7b60ef9c78c9f61d4731e95dd03d98706780b4450020c7b4b0690bb838198b0cf6d00406d40f55c80a73ddac618321542e943fea0Etc67WQxCH4mOFTX5-LHeTp4BhH453co3x7AaY3AYwMdjre-A5hyy8Wp0eYza_htFR6Oq09lhousUnXmfcVg&amp;kode=ff0b885ad0f5f989208fd68a242b77a2507d590aeb5d0359e537530452e75c6f67b591565df4c7278dda37a2f3e6f67c458e5fa81141596c1a84dfd8a543d7427ivx4Aomru8wLQ16VVHjEKPxS9nnnn1HpurzxnjnWWw">7010/SK/BAN-PT/Ak.P/S2/VII/2025</a></td><td>08/07/2025-08/07/2027</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S2-Perumahan-dan-Pemukiman.pdf">Sertifikat</a></td></tr>
+                <tr><td>94</td><td>95136</td><td>Perumahan dan Pemukiman</td><td>S2</td><td>Baik Sekali</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/04/SK-S2-Perumahan-dan-Pemukiman.pdf">6410/SK/BAN-PT/Ak/M/IV/2026</a></td><td>21/04/2026-21/24/2031</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/04/Sertifikat-S2-Perumahan-dan-Pemukiman.pdf">Sertifikat</a></td></tr>
                 <tr><td>95</td><td>67101</td><td>Ilmu Politik</td><td>S2</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-78370-541ce1f99f5ebe57cbd8def675a109e2_sign.pdf">720/SK/BAN-PT/Ak.Ppj/M/III/2024</a></td><td>20/03/2024 – 20/03/2029</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1GSAdrlRfQFdOez4ZONfZBcUIlPpkCHll/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>96</td><td>54105</td><td>Ilmu Tanah</td><td>S2</td><td>Baik Sekali</td><td>13229/SK/BAN-PT/Akred/M/XII/2021</td><td>15/12/2021 – 15/12/2026</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1l453aKO27kxCdHmleQdsf-7uoi0g6DkX/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>97</td><td>70101</td><td>Ilmu Komunikasi</td><td>S2</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/12/SK-AKreditasi-S2-Ilkom-2025-2030.pdf">123/AK.03.05/2025</a></td><td>09/12/2025 – 09/12/2025</td><td>LAMSPAK</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/12/AKREDITASI-UNGGUL-2025-2030.pdf">Sertifikat</a></td></tr>
-                <tr><td>98</td><td>62101</td><td>Akuntansi</td><td>S2</td><td>Unggul</td><td>548/DE/A.5/AR.10/VII/2023</td><td>25/07/2023 – 25/07/2028</td><td>Lamemba</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/11/S2-AKUNTANSI.pdf">Sertifikat</a></td></tr>
-                <tr><td>99</td><td>11106</td><td>Ilmu Biomedis</td><td>S2</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2026/02/SK-Akreditasi-Prodi-S2-Biomedis-2026-2031.pdf">0007/LAM-PTKes/Akr/Mag/I/2026</a></td><td>24/01/2026 – 24/01/2031</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
+                <tr><td>97</td><td>70101</td><td>Ilmu Komunikasi</td><td>S2</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/12/SK-AKreditasi-S2-Ilkom-2025-2030.pdf">123/AK.03.05/2025</a></td><td>09/12/2025 – 09/12/2025</td><td>LAMSPAK</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/12/AKREDITASI-UNGGUL-2025-2030.pdf">Sertifikat</a></td></tr>
+                <tr><td>98</td><td>62101</td><td>Akuntansi</td><td>S2</td><td>Unggul</td><td>548/DE/A.5/AR.10/VII/2023</td><td>25/07/2023 – 25/07/2028</td><td>Lamemba</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/11/S2-AKUNTANSI.pdf">Sertifikat</a></td></tr>
+                <tr><td>99</td><td>11106</td><td>Ilmu Biomedis</td><td>S2</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/02/SK-Akreditasi-Prodi-S2-Biomedis-2026-2031.pdf">0007/LAM-PTKes/Akr/Mag/I/2026</a></td><td>24/01/2026 – 24/01/2031</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
                 <tr><td>100</td><td>95129</td><td>Ilmu Lingkungan</td><td>S2</td><td>Baik Sekali</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-66339-acbc1d755968c418597e6a39a10057a8.pdf">3050/SK/BAN-PT/Ak/M/VIII/2023</a></td><td>1/8/2023 – 1/8/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/10AEgOLlCMviftUrITraLhRbYiusELdTN/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>101</td><td>22101</td><td>Teknik Sipil</td><td>S2</td><td>Unggul</td><td>0415/SK/LAM Teknik/AM/VIII/2024</td><td>21/8/2024 - 20/08/2029</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1uYhoso9X1sint2f6OeLrB3zBTA9tdbAk/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>102</td><td>41111</td><td>Teknologi Industri Pertanian</td><td>S2</td><td>B</td><td>6<a href="https://sapto.banpt.or.id/downloadsks/SSK-90279-58ca9106222490b76671dba5d10e4104_sign.pdf">6152/SK/BAN-PT/Ak.Ppj/M/III/2025</a>152/SK/BAN-PT/Ak.Ppj/M/III/2025</td><td>26-03-2025 – 26-03-2030</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/16DyA7CXgDp2z925GM4GDZyzawGzocnjs/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>103</td><td>15101</td><td>Kebidanan</td><td>S2</td><td>Baik Sekali</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-akreditasi-prodi-kebidanan-program-magister-2023.pdf">0105/LAM-PTKes/Akr/Mag/II/2023</a></td><td>9/2/2023 – 9/2/2028</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/0105-111-Sertifikat_MAGISTER_-_KEBIDANAN_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
+                <tr><td>102</td><td>41111</td><td>Teknologi Industri Pertanian</td><td>S2</td><td>B</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-90279-58ca9106222490b76671dba5d10e4104_sign.pdf">6152/SK/BAN-PT/Ak.Ppj/M/III/2025</a></td><td>26-03-2025 – 26-03-2030</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/16DyA7CXgDp2z925GM4GDZyzawGzocnjs/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
+                <tr><td>103</td><td>15101</td><td>Kebidanan</td><td>S2</td><td>Baik Sekali</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-akreditasi-prodi-kebidanan-program-magister-2023.pdf">0105/LAM-PTKes/Akr/Mag/II/2023</a></td><td>9/2/2023 – 9/2/2028</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/0105-111-Sertifikat_MAGISTER_-_KEBIDANAN_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
                 <tr><td>104</td><td>26101</td><td>Teknik Industri</td><td>S2</td><td>Unggul</td><td>0105/SK/LAMTeknik/AM/IV/2025</td><td>21/04/2025 – 20/04/2030</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1MQ4r088lLIi4gJNrAhEX5O8ZpdBn9UBj/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>105</td><td>48101</td><td>Farmasi</td><td>S2</td><td>Unggul</td><td>0409/LAM-PTKes/Akr/Mag/III/2025</td><td>20/03/2025 – 20/03/2030</td><td>LAMPT-Kes</td><td>-</td></tr>
                 <tr><td>106</td><td>54195</td><td>Proteksi Tanaman</td><td>S2</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-76431-65e760d0c6e5ee3066db330b655bbed1_sign.pdf">5281/SK/BAN-PT/Ak-PNB/M/XII/2023</a></td><td>14/11/2023 – 14/11/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1X1OBSypcWIqF5V9bKhm3qsVQMxcj49aC/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>107</td><td>74102</td><td>Kenotariatan</td><td>S2</td><td>Unggul</td><td>6158/SK/BAN-PT/Ak/M/X/2024</td><td>8/10/ 2024 - 8-10-2029</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1Rm7Ep_Cv5glGmcL-kX5r_adlmGSblyPU/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>108</td><td>20101</td><td>Teknik Elektro</td><td>S2</td><td>Baik Sekali</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/SK-Akreditasi-S2-TE-2025.pdf">0490/SK/LAM Teknik/AM/VIII/2025</a></td><td>14/08/2025 – 20/08/2030</td><td>LAM-Teknik</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/Sertifikat-Akreditasi-S2-TE.pdf">Sertifikat</a></td></tr>
+                <tr><td>108</td><td>20101</td><td>Teknik Elektro</td><td>S2</td><td>Baik Sekali</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/SK-Akreditasi-S2-TE-2025.pdf">0490/SK/LAM Teknik/AM/VIII/2025</a></td><td>14/08/2025 – 20/08/2030</td><td>LAM-Teknik</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/Sertifikat-Akreditasi-S2-TE.pdf">Sertifikat</a></td></tr>
                 <tr><td>109</td><td>80103</td><td>Teknik Pertanian dan Biosistem</td><td>S2</td><td>Baik Sekali</td><td>6980/SK/BAN-PT/Ak-PNB/M/XII/2024</td><td>12/12/2023 – 12/12/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1Qleh2m7XjHJ2nia2UKR0pdEGHYsFQAWm/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>110</td><td>13121</td><td>Epidemiologi</td><td>S2</td><td>Unggul</td><td>0408/LAM-PTKes/Akr/Mag/VI/2022</td><td>09/06/2022 – 09/06/2027</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
                 <tr><td>111</td><td>54102</td><td>Ekonomi Pertanian</td><td>S2</td><td>Baik Sekali</td><td>2408/SK/BAN-PT/Akred/M/IV/2021</td><td>27/04/2021 – 27/04/2026</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1fQTOIHT_ylHwFPCoFoufq_Kx45_9w1Jc/view"><button class="btn success">Sertifikat</button></a></td></tr>
@@ -288,33 +287,33 @@
                 <tr><td>114</td><td>45101</td><td>Fisika</td><td>S2</td><td>Unggul</td><td>068/SK/LAMSAMA/Akred/M/V/2025</td><td>02/05/2025 – 01/05/2030</td><td>LAMSAMA</td><td><a href="https://drive.google.com/file/d/1ANqbpwzXurdIRS7aQfkR1Y9rmDzs2VlG/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>115</td><td>87122</td><td>Ekonomi</td><td>S2</td><td>Unggul</td><td>2686/DE/A.5/AR.10/VIII/2025</td><td>25/08/2025 - 25/08/2030</td><td>LAMEMBA</td><td><a href="https://uandalas-my.sharepoint.com/:i:/g/personal/ke_lpm_unand_ac_id/ETGfyVRc8LRChrXM5zcLg14BphCl7Xbcvsb6MZBTDlm1nw?e=5ScfeF">Sertifikat</a></td></tr>
                 <tr><td>116</td><td>61101</td><td>Manajemen</td><td>S2</td><td>Unggul</td><td>728/DE/A.5/AR.10/IX/2023</td><td>23/10/2023 – 23/10/2028</td><td>LAMEMBA</td><td><a href="https://drive.google.com/file/d/1lah_Hdhq_EV8ygcD9YmW9g67fjg_Bopw/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>117</td><td>54104</td><td>Agronomi</td><td>S2</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-84482-353e6e5742e5b2fc8d0fa634ee11d4cb_sign.pdf">7504/SK/BAN-PT/Ak/M/IX/2025</a></td><td>02/09/2025 – 02/09/2030</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S2-AGRONOMI.pdf">Sertifikat</a></td></tr>
-                <tr><td>118</td><td>46101</td><td>Biologi</td><td>S2</td><td>Unggul</td><td>102/SK/LAMSAMA/Akred/M/X/2023</td><td>26/10/2023 – 26/10/2028</td><td>LAMSAMA</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S2-BIOLOGI.pdf">Sertifikat</a></td></tr>
+                <tr><td>117</td><td>54104</td><td>Agronomi</td><td>S2</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-84482-353e6e5742e5b2fc8d0fa634ee11d4cb_sign.pdf">7504/SK/BAN-PT/Ak/M/IX/2025</a></td><td>02/09/2025 – 02/09/2030</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S2-AGRONOMI.pdf">Sertifikat</a></td></tr>
+                <tr><td>118</td><td>46101</td><td>Biologi</td><td>S2</td><td>Unggul</td><td>102/SK/LAMSAMA/Akred/M/X/2023</td><td>26/10/2023 – 26/10/2028</td><td>LAMSAMA</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S2-BIOLOGI.pdf">Sertifikat</a></td></tr>
                 <tr><td>119</td><td>54131</td><td>Ilmu Peternakan</td><td>S2</td><td>Unggul</td><td>6601/SK/BAN-PT/Ak.KP/M/V/2025</td><td>15/05/2025 - 19/09/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1ihImfEJGVA3th5jTdj7_RYE51WDj6HhW/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>120</td><td>47101</td><td>Kimia</td><td>S2</td><td>Unggul</td><td>011/SK/LAMSAMA/Akred/M/III/2024</td><td>21/03/2024 – 21/03/2029</td><td>LAMSAMA</td><td><a href="https://drive.google.com/file/d/14QCXXSo3TMH3TPtDodbV-zVF-EM4YbTo/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>121</td><td>95103</td><td>Pembangunan Wilayah Dan Pedesaan</td><td>S2</td><td>A</td><td>337/AK.03.01/2025</td><td>06/04/2025 - 06/04/2026</td><td>BAN-PT</td><td>Sertifikat</td></tr>
                 <tr><td>122</td><td>69101</td><td>Sosiologi</td><td>S2</td><td>Unggul</td><td>562/SK/BAN-PT/Ak.KP/M/II/2024</td><td>27/06/2023 – 27/06/2028</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1aVmt55RaI0ne2AU5-quwBuIuZUJh4DaR/view?usp=sharing">Sertifikat</a></td></tr>
-                <tr><td>123</td><td>41123</td><td>Teknologi Pangan dan Hasil Pertanian</td><td>S2</td><td>Baik</td><td>4357/SK/BAN-PT/Ak.P/M/X/2023</td><td>24-10-2023 - 24-10-2025</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S2-Teknologi-Pangan-dan-Hasil-Pertanian.pdf">Sertifikat</a></td></tr>
-                <tr><td>124</td><td>13161</td><td>Administrasi Rumah Sakit</td><td>S2</td><td>Terakreditasi</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Minimum-Prodi-Administrasi-Rumah-Sakit-Program-Magister-FK-UNAND.pdf">0039/LAM-PTKes/Akr PSB.PTN-BH/Mag/IX/2023</a></td><td>-</td><td>LAMPT-Kes</td><td>-</td></tr>
-                <tr><td>125</td><td>22106</td><td>Manajemen Bencana</td><td>S2</td><td>Terakreditasi Pertama</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2026/01/SK-Akreditasi-S2-Manajemen-Bencana.pdf">026/SK/BAN-PT/Ak.P/2.0/S2/l/2026</a></td><td>06-01-2026 - 06-01-2028</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2026/01/Sertifikat-AKreditasi-Prodi-S2-Manajemen-Bencana.pdf">Sertifikat</a></td></tr>
+                <tr><td>123</td><td>41123</td><td>Teknologi Pangan dan Hasil Pertanian</td><td>S2</td><td>Baik</td><td>4357/SK/BAN-PT/Ak.P/M/X/2023</td><td>24-10-2023 - 24-10-2025</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S2-Teknologi-Pangan-dan-Hasil-Pertanian.pdf">Sertifikat</a></td></tr>
+                <tr><td>124</td><td>13161</td><td>Administrasi Rumah Sakit</td><td>S2</td><td>Terakreditasi</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Minimum-Prodi-Administrasi-Rumah-Sakit-Program-Magister-FK-UNAND.pdf">0039/LAM-PTKes/Akr PSB.PTN-BH/Mag/IX/2023</a></td><td>-</td><td>LAMPT-Kes</td><td>-</td></tr>
+                <tr><td>125</td><td>22106</td><td>Manajemen Bencana</td><td>S2</td><td>Terakreditasi Pertama</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/01/SK-Akreditasi-S2-Manajemen-Bencana.pdf">026/SK/BAN-PT/Ak.P/2.0/S2/l/2026</a></td><td>06-01-2026 - 06-01-2028</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/01/Sertifikat-AKreditasi-Prodi-S2-Manajemen-Bencana.pdf">Sertifikat</a></td></tr>
                 <tr><td>126</td><td>21001</td><td>Teknik Mesin</td><td>S3</td><td>Unggul</td><td>0490/SK/LAM Teknik/AD/VIII/2024</td><td>21/08/2024 – 20/08/2029</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1p-I63Bqbu2Del3ra6F7a4rbhPqK5e4u7/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>127</td><td>74005</td><td>Hukum</td><td>S3</td><td>Unggul</td><td>6337/SK/BAN-PT/Ak.KP/D/V/2025</td><td>06/05/2025 – 21/08/2029</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S3-HUKUM.pdf">Sertifikat</a></td></tr>
-                <tr><td>128</td><td>11006</td><td>Ilmu Biomedis</td><td>S3</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Prodi-Ilmu-Biomedis-Program-Doktor-2024-2029.pdf">0302/LAM-PTKes/Akr/Dok/V/2024</a></td><td>29/5-2024 – 29-5/2029</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/0302-141-Sertifikat_DOKTOR_-_ILMU_BIOMEDIS_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
+                <tr><td>127</td><td>74005</td><td>Hukum</td><td>S3</td><td>Unggul</td><td>6337/SK/BAN-PT/Ak.KP/D/V/2025</td><td>06/05/2025 – 21/08/2029</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S3-HUKUM.pdf">Sertifikat</a></td></tr>
+                <tr><td>128</td><td>11006</td><td>Ilmu Biomedis</td><td>S3</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-Akreditasi-Prodi-Ilmu-Biomedis-Program-Doktor-2024-2029.pdf">0302/LAM-PTKes/Akr/Dok/V/2024</a></td><td>29/5-2024 – 29-5/2029</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/0302-141-Sertifikat_DOKTOR_-_ILMU_BIOMEDIS_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
                 <tr><td>129</td><td>47001</td><td>Ilmu Kimia</td><td>S3</td><td>Unggul</td><td>069/SK/LAMSAMA/Akred/D/VII/2023</td><td>14/07/2023 – 14/07/2028</td><td>LAMSAMA</td><td><a href="https://drive.google.com/file/d/109QGKJ9g44hqCC4WGqPefwUdNg_j4E9E/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>130</td><td>48001</td><td>Farmasi</td><td>S3</td><td>Unggul</td><td>0194/LAM-PTKes/Akr/Dok/II/2025</td><td>27/02/2025 – 27/02/2030</td><td>LAMPT-Kes</td><td>Sertifikat</td></tr>
                 <tr><td>131</td><td>60004</td><td>Ekonomi</td><td>S3</td><td>A</td><td>559/DE/A.5/LAMEMBA-S/X/2025</td><td>06/04/2025 - 06/04/2026</td><td>LAMEMBA</td><td><a href="https://drive.google.com/file/d/1I6dW_SHYZwLj6dvrolaC4RNIudu8if95/view"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>132</td><td>54031</td><td>Ilmu Peternakan</td><td>S3</td><td>Baik Sekali</td><td>4568/SK/BAN-PT/Ak/D/VI/2024</td><td>4/6/2024– 4/6/2029</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/16HdAY9b6ToZhTtmWvysjFovrIaAA--5K/view?usp=drive_link"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>133</td><td>46001</td><td>Biologi</td><td>S3</td><td>Unggul</td><td>146/SK/LAMSAMA/Akred/D/XII/2023</td><td>29/12/2023 – 29/12/2028</td><td>LAMSAMA</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S3-BIOLOGI.pdf">Sertifikat</a></td></tr>
-                <tr><td>134</td><td>13001</td><td>Kesehatan Masyarakat</td><td>S3</td><td>Unggul</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/SK-Hasil-Akreditasi-Prodi-Kesehatan-Masyarakat-Program-Doktor-2023-2028.pdf">0411/LAM-PTKes/Akr/Dok/V/2023</a></td><td>25/05/2023 – 25/05/2028</td><td>LAMPT-Kes</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/10/0411-117-Sertifikat_DOKTOR_-_ILMU_KESEHATAN_MASYARAKAT_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
-                <tr><td>135</td><td>54001</td><td>Ilmu Pertanian</td><td>S3</td><td>Unggul</td><td><a href="https://sapto2.banpt.or.id/histori_prodi/Akreditasi/detail?tipe=open_file&amp;file=9d58bfcddd3bf40f0d223ebbfa78010d62f2a07746c20812115a5dd1803ea06b46ce3e2a3ca180ede09a5c12c4d8f77c595d7322ae5245b6eba736486ca28e66FW5F0VF6Y23AdedPs7Jh7ikyceuny08B0pvcrjEMyNs0DxBKVViKp7gXK0RcyhCnrLeaCkfHCSNqN8MXTrS_-Q&amp;kode=9534d4dca5dc38adfc1185881e9074ba091d214fa7fea46794301f28609c050f6e942cd66b5935a850d3921a4d4ed73ae3ad1fd661b629bd523e4a70c861cb3eoi1ifWAFWtvBspgbkuIDYWFjVOSecUNHkQGIb2nPrls">7044/SK/BAN-PT/Ak/S3/VII/2025</a></td><td>20/07/2025 - 29/07/2030</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S3-Studi-Ilmu-Pertanian.pdf">Sertifikat</a></td></tr>
-                <tr><td>136</td><td>95006</td><td>Studi Pembangunan</td><td>S3</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-83354-33a0149faf170f072c9882bfa0379fa2_sign.pdf">7503/SK/BAN-PT/Ak/D/IX/2025</a></td><td>02/09/2025 - 02/09/2030</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S3-STUDI-PEMBANGUNAN-1.pdf">Sertifikat</a></td></tr>
+                <tr><td>133</td><td>46001</td><td>Biologi</td><td>S3</td><td>Unggul</td><td>146/SK/LAMSAMA/Akred/D/XII/2023</td><td>29/12/2023 – 29/12/2028</td><td>LAMSAMA</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S3-BIOLOGI.pdf">Sertifikat</a></td></tr>
+                <tr><td>134</td><td>13001</td><td>Kesehatan Masyarakat</td><td>S3</td><td>Unggul</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/SK-Hasil-Akreditasi-Prodi-Kesehatan-Masyarakat-Program-Doktor-2023-2028.pdf">0411/LAM-PTKes/Akr/Dok/V/2023</a></td><td>25/05/2023 – 25/05/2028</td><td>LAMPT-Kes</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/10/0411-117-Sertifikat_DOKTOR_-_ILMU_KESEHATAN_MASYARAKAT_-_UNIVERSITAS_ANDALAS__PADANG.pdf">Sertifikat</a></td></tr>
+                <tr><td>135</td><td>54001</td><td>Ilmu Pertanian</td><td>S3</td><td>Unggul</td><td><a href="https://sapto2.banpt.or.id/histori_prodi/Akreditasi/detail?tipe=open_file&amp;file=9d58bfcddd3bf40f0d223ebbfa78010d62f2a07746c20812115a5dd1803ea06b46ce3e2a3ca180ede09a5c12c4d8f77c595d7322ae5245b6eba736486ca28e66FW5F0VF6Y23AdedPs7Jh7ikyceuny08B0pvcrjEMyNs0DxBKVViKp7gXK0RcyhCnrLeaCkfHCSNqN8MXTrS_-Q&amp;kode=9534d4dca5dc38adfc1185881e9074ba091d214fa7fea46794301f28609c050f6e942cd66b5935a850d3921a4d4ed73ae3ad1fd661b629bd523e4a70c861cb3eoi1ifWAFWtvBspgbkuIDYWFjVOSecUNHkQGIb2nPrls">7044/SK/BAN-PT/Ak/S3/VII/2025</a></td><td>20/07/2025 - 29/07/2030</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S3-Studi-Ilmu-Pertanian.pdf">Sertifikat</a></td></tr>
+                <tr><td>136</td><td>95006</td><td>Studi Pembangunan</td><td>S3</td><td>Unggul</td><td><a href="https://sapto.banpt.or.id/downloadsks/SSK-83354-33a0149faf170f072c9882bfa0379fa2_sign.pdf">7503/SK/BAN-PT/Ak/D/IX/2025</a></td><td>02/09/2025 - 02/09/2030</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S3-STUDI-PEMBANGUNAN-1.pdf">Sertifikat</a></td></tr>
                 <tr><td>137</td><td>61001</td><td>Manajemen</td><td>S3</td><td>Unggul</td><td>2689/DE/A.5/AR.10/VII/2025</td><td>25/08/2025 - 25/08/2030</td><td>LAMEMBA</td><td><a href="https://uandalas-my.sharepoint.com/:i:/g/personal/ke_lpm_unand_ac_id/EfPHqpYsMPlBlU-ENijWsxMBF1H_Yl0ZijgJ7KcjAQhfwA?e=biIMtE">Sertifikat</a></td></tr>
                 <tr><td>138</td><td>22001</td><td>Teknik Sipil</td><td>S3</td><td>Baik Sekali</td><td>0406/SK/LAM Teknik/AD/XII/2023</td><td>21/12/2023 – 20/12/2028</td><td>LAM-Teknik</td><td><a href="https://drive.google.com/file/d/1wl70UBmyrYqdi3rmyvI399sy7N2baT4s/view"><button class="btn success">Sertifikat</button></a></td></tr>
-                <tr><td>139</td><td>95007</td><td>Studi Kebijakan</td><td>S3</td><td>Baik Sekali</td><td><a href="https://sapto2.banpt.or.id/histori_prodi/Akreditasi/detail?tipe=open_file&amp;file=2090e92d3d6309ce6e873d5822dde2dc3255703121785cc281b3ab4cb8d09478d0bf0418c5be756d9aa61ff4677ba7783e659bbef81c153aa1bae9355dddaa39iyKxFNftw_2aIENLTmGAajvuGd87mI6YVcHlZhstbMaz0Obhq2q8oSGdPsUhQnaSy7Lqr5bmUSNp4DI6tV1XAA&amp;kode=260d2ffa06d47b90ec6fda8f1c29f9fde359bdeabe023bcf343e56ee016cfe9f8a4ba13ff4efc1b38b41a88938932093451c6d0e686de6fd503d3fb55cb21f7e5Yl95uMxnP9lfLXU14IRxzvY5wDDfXiYo5ZKfNk0onc">6902/SK/BAN-PT/Ak/S3/VII/2025</a></td><td>01/07/2025 - 01/07/2030</td><td>BAN-PT</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/S3-Studi-Studi-Kebijakan.pdf">Sertifikat</a></td></tr>
-                <tr><td>140</td><td>20001</td><td>Teknik Elektro</td><td>S3</td><td>Baik Sekali</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/sk_akred_3_2024_AKR4031581773324.pdf">0749/SK/LAM Teknik/AD/XII/2024</a></td><td>21/12/2024 – 21/12/2029</td><td>LAM-Teknik</td><td><a href="https://newlpm.unand.ac.id/wp-content/uploads/2025/09/sert_akred_3_2024_AKR4031581773324.pdf">Sertifikat</a></td></tr>
+                <tr><td>139</td><td>95007</td><td>Studi Kebijakan</td><td>S3</td><td>Baik Sekali</td><td><a href="https://sapto2.banpt.or.id/histori_prodi/Akreditasi/detail?tipe=open_file&amp;file=2090e92d3d6309ce6e873d5822dde2dc3255703121785cc281b3ab4cb8d09478d0bf0418c5be756d9aa61ff4677ba7783e659bbef81c153aa1bae9355dddaa39iyKxFNftw_2aIENLTmGAajvuGd87mI6YVcHlZhstbMaz0Obhq2q8oSGdPsUhQnaSy7Lqr5bmUSNp4DI6tV1XAA&amp;kode=260d2ffa06d47b90ec6fda8f1c29f9fde359bdeabe023bcf343e56ee016cfe9f8a4ba13ff4efc1b38b41a88938932093451c6d0e686de6fd503d3fb55cb21f7e5Yl95uMxnP9lfLXU14IRxzvY5wDDfXiYo5ZKfNk0onc">6902/SK/BAN-PT/Ak/S3/VII/2025</a></td><td>01/07/2025 - 01/07/2030</td><td>BAN-PT</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/S3-Studi-Studi-Kebijakan.pdf">Sertifikat</a></td></tr>
+                <tr><td>140</td><td>20001</td><td>Teknik Elektro</td><td>S3</td><td>Baik Sekali</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/sk_akred_3_2024_AKR4031581773324.pdf">0749/SK/LAM Teknik/AD/XII/2024</a></td><td>21/12/2024 – 21/12/2029</td><td>LAM-Teknik</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2025/09/sert_akred_3_2024_AKR4031581773324.pdf">Sertifikat</a></td></tr>
                 <tr><td>141</td><td>69001</td><td>Sosiologi</td><td>S3</td><td>Baik Sekali</td><td>4345/SK/BAN-PT/Ak/D/V/2024</td><td>21/05/2024 - 21-05-2029</td><td>BAN-PT</td><td><a href="https://drive.google.com/file/d/1kr97BullOKuuBtFnWVdZB0uFXiYMm8Kh/view?usp=sharing"><button class="btn success">Sertifikat</button></a></td></tr>
                 <tr><td>142</td><td>26002</td><td>Teknik Industri</td><td>S3</td><td>Baik Sekali</td><td>0750/SK/LAM Teknik/AD/XII/2024</td><td>21/12/2024 - 21/12/2029</td><td>LAM-Teknik</td><td>Sertifikat</td></tr>
-                <tr><td>143</td><td>44002</td><td>Matematika</td><td>S3</td><td>Terakreditasi</td><td>-</td><td>-</td><td>LAMSAMA</td><td></td></tr>
+                <tr><td>143</td><td>44002</td><td>Matematika</td><td>S3</td><td>Baik</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/04/SK.A.099-SK-Peringkat-Akreditasi-S3-Matematika-UNAND.pdf">099/SK/LAMSAMA/Akred/D/IV/2026</a></td><td>15/04/2026 – 16/04/2031</td><td>LAMSAMA</td><td><a href="https://lpm.unand.ac.id/wp-content/uploads/2026/04/Sertifikat_lamsama-S3-Matematika.pdf">Sertifikat</a></td></tr>
                 <tr><td>144</td><td>62001</td><td>Ilmu Akuntansi</td><td>S3</td><td>Baik</td><td>065/DE/A.5/AR.11/XI/2023</td><td>8/11/2023 - 8-11-2028</td><td>LAMEMBA</td><td>Sertifikat</td></tr>
                 <tr><td>145</td><td>25001</td><td>Teknik Lingkungan</td><td>S3</td><td>Baik</td><td>0520/SK/LAMTeknik/AD/VIII/2024</td><td>14/8/2024 - 14/8/2026</td><td>LAM-Teknik</td><td>Sertifikat</td></tr>
                 <tr><td>146</td><td>13702</td><td>Gizi Klinis</td><td>Sp-1</td><td>Terakreditasi</td><td>006/LAM-PTKes/Akr PSB.PTN-BH/Spe/2024</td><td>-</td><td>LAMPT-Kes</td><td></td></tr>
@@ -337,11 +336,29 @@
             'Terakreditasi': '#8b5cf6', 'Terakreditasi Pertama': '#a78bfa'
         };
 
+        const MASA_COLORS = {
+            'Berlaku > 1 Tahun': '#10b981', // emerald-500
+            'Berakhir Tahun Ini': '#f59e0b', // amber-500
+            'Kadaluarsa': '#ef4444', // red-500
+            'Tidak Diketahui': '#cbd5e1' // slate-300
+        };
+
+        const DEFAULT_COLOR = '#94a3b8';
+
         // Initialize variables
         let data = [];
         let filteredData = [];
         let searchTerm = '';
         let filterJenjang = 'All';
+        let filterPeringkat = 'All';
+        let filterLembaga = 'All';
+
+        // Chart Instances
+        let chartPeringkat, chartJenjang, chartMasaBerlaku;
+
+        // Base date assumption based on prompt constraint
+        const TODAY = new Date(); // Using the runtime Date (approx May 2026 based on execution context)
+        const CURRENT_YEAR = TODAY.getFullYear();
 
         // Parse HTML Data
         function parseHTMLData(htmlString) {
@@ -354,16 +371,68 @@
                 const ketCell = cells[8];
                 const linkEl = ketCell ? ketCell.querySelector('a') : null;
                 
+                // Membersihkan duplikasi SK
+                let skRaw = cells[5]?.innerHTML || '';
+                let skText = cells[5]?.textContent?.trim() || '';
+                if(skRaw.includes('<a') && skText.match(/^6.*6152/)) {
+                    skText = skText.substring(skText.indexOf('6152')); 
+                }
+
+                // Hitung Masa Berlaku
+                let masaRaw = cells[6]?.textContent?.trim() || '';
+                let statusMasa = 'Tidak Diketahui';
+                let endDate = null;
+
+                if (masaRaw && masaRaw !== '-' && masaRaw !== '') {
+                    // Cari pola tanggal menggunakan Regex
+                    // Match 1: DD/MM/YYYY atau DD-MM-YYYY
+                    const dateRegex1 = /(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?!\d)/g;
+                    // Match 2: DD Month YYYY
+                    const dateRegex2 = /(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})(?!\d)/g;
+                    
+                    let matches1 = [...masaRaw.matchAll(dateRegex1)];
+                    let matches2 = [...masaRaw.matchAll(dateRegex2)];
+
+                    let d, m, y;
+                    if (matches1.length > 0) {
+                        // Selalu ambil match terakhir karena formatnya "StartDate - EndDate"
+                        let lastMatch = matches1[matches1.length - 1];
+                        d = parseInt(lastMatch[1], 10);
+                        m = parseInt(lastMatch[2], 10) - 1; // bulan di JS index 0-11
+                        y = parseInt(lastMatch[3], 10);
+                        endDate = new Date(y, m, d);
+                    } else if (matches2.length > 0) {
+                        let lastMatch = matches2[matches2.length - 1];
+                        d = parseInt(lastMatch[1], 10);
+                        const months = {'januari':0, 'februari':1, 'maret':2, 'april':3, 'mei':4, 'juni':5, 'juli':6, 'agustus':7, 'september':8, 'oktober':9, 'november':10, 'desember':11, 'jan':0, 'feb':1, 'mar':2, 'apr':3, 'may':4, 'jun':5, 'jul':6, 'aug':7, 'sep':8, 'oct':9, 'nov':10, 'dec':11};
+                        let mStr = lastMatch[2].toLowerCase();
+                        m = months[mStr] !== undefined ? months[mStr] : 0;
+                        y = parseInt(lastMatch[3], 10);
+                        endDate = new Date(y, m, d);
+                    }
+
+                    if (endDate && !isNaN(endDate.getTime())) {
+                        if (endDate < TODAY) {
+                            statusMasa = 'Kadaluarsa';
+                        } else if (endDate.getFullYear() === CURRENT_YEAR) {
+                            statusMasa = 'Berakhir Tahun Ini';
+                        } else {
+                            statusMasa = 'Berlaku > 1 Tahun';
+                        }
+                    }
+                }
+
                 return {
                     id: index,
                     nomor: cells[0]?.textContent?.trim() || '',
                     kode: cells[1]?.textContent?.trim() || '',
                     nama: cells[2]?.textContent?.trim() || '',
-                    jenjang: cells[3]?.textContent?.trim() || '',
-                    peringkat: cells[4]?.textContent?.trim() || '',
-                    sk: cells[5]?.textContent?.trim() || '',
-                    masa: cells[6]?.textContent?.trim() || '',
-                    lembaga: cells[7]?.textContent?.trim() || '',
+                    jenjang: cells[3]?.textContent?.trim() || 'Tidak Disebutkan',
+                    peringkat: cells[4]?.textContent?.trim() || 'Lainnya',
+                    sk: skText,
+                    masa: masaRaw,
+                    statusMasa: statusMasa,
+                    lembaga: cells[7]?.textContent?.trim() || 'Tidak Disebutkan',
                     linkSertifikat: linkEl ? linkEl.getAttribute('href') : null,
                 };
             }).filter(item => item.jenjang !== 'Institusi' && item.nama !== ''); 
@@ -382,141 +451,149 @@
             return `rgba(100,116,139,${alpha})`; // fallback
         }
 
-        // Render functions
-        function renderKPIs(stats) {
-            document.getElementById('kpi-total').textContent = stats.total;
-            document.getElementById('kpi-unggul').textContent = stats.unggulAndA;
-            document.getElementById('kpi-baik').textContent = stats.baikSekaliAndB;
+        // --- DASHBOARD FUNCTIONS ---
+        function updateDashboardCards(currentData) {
+            document.getElementById('statTotal').textContent = currentData.length;
             
-            const topLembaga = Object.entries(stats.countLembaga).sort((a,b) => b[1] - a[1])[0];
-            document.getElementById('kpi-lembaga').textContent = topLembaga ? `${topLembaga[0]} (${topLembaga[1]})` : '-';
+            const countUnggulA = currentData.filter(i => i.peringkat === 'Unggul' || i.peringkat === 'A').length;
+            document.getElementById('statUnggul').textContent = countUnggulA;
+            
+            const countPerhatian = currentData.filter(i => i.statusMasa === 'Kadaluarsa' || i.statusMasa === 'Berakhir Tahun Ini').length;
+            document.getElementById('statPerhatian').textContent = countPerhatian;
         }
 
-        function initCharts(stats) {
-            // Setup Pie Chart Data
-            const pieDataObj = Object.entries(stats.countPeringkat).sort((a,b) => b[1] - a[1]);
-            const pieLabels = pieDataObj.map(d => d[0]);
-            const pieValues = pieDataObj.map(d => d[1]);
-            const pieColors = pieLabels.map(l => COLORS[l] || '#cbd5e1');
+        function initCharts() {
+            // Setup Chart Defaults
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.color = '#64748b';
 
-            new Chart(document.getElementById('pieChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: pieLabels,
-                    datasets: [{
-                        data: pieValues,
-                        backgroundColor: pieColors,
-                        borderWidth: 0
-                    }]
-                },
+            // Peringkat Bar Chart
+            const ctxPeringkat = document.getElementById('chartPeringkat').getContext('2d');
+            chartPeringkat = new Chart(ctxPeringkat, {
+                type: 'bar',
+                data: { labels: [], datasets: [{ label: 'Jumlah Prodi', data: [], backgroundColor: [], borderRadius: 4 }] },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '65%',
                     plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 12 } } },
+                        legend: { display: false },
                         tooltip: {
-                            callbacks: { label: (ctx) => ` ${ctx.raw} Prodi` },
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            titleColor: '#1e293b',
-                            bodyColor: '#334155',
-                            borderColor: '#e2e8f0',
-                            borderWidth: 1,
-                            padding: 10,
-                            boxPadding: 4
-                        },
-                        datalabels: {
-                            color: '#fff',
-                            font: { weight: 'bold', size: 12 },
-                            formatter: (value, ctx) => {
-                                let sum = 0;
-                                let dataArr = ctx.chart.data.datasets[0].data;
-                                dataArr.map(data => { sum += data; });
-                                let percentage = (value * 100 / sum);
-                                return percentage > 5 ? percentage.toFixed(0) + "%" : "";
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) { label += context.parsed.y; }
+                                    let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    let percentage = ((context.parsed.y / total) * 100).toFixed(1) + '%';
+                                    return label + ` (${percentage})`;
+                                }
                             }
                         }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0 } },
+                        x: { grid: { display: false } }
                     }
                 }
             });
 
-            // Setup Bar Chart Jenjang
-            const jenjangDataObj = Object.entries(stats.countJenjang).sort((a,b) => b[1] - a[1]);
-            new Chart(document.getElementById('barJenjang'), {
-                type: 'bar',
-                data: {
-                    labels: jenjangDataObj.map(d => d[0]),
-                    datasets: [{
-                        label: 'Total Prodi',
-                        data: jenjangDataObj.map(d => d[1]),
-                        backgroundColor: '#0ea5e9',
-                        borderRadius: 4
-                    }]
-                },
+            // Masa Berlaku Doughnut Chart
+            const ctxMasaBerlaku = document.getElementById('chartMasaBerlaku').getContext('2d');
+            chartMasaBerlaku = new Chart(ctxMasaBerlaku, {
+                type: 'doughnut',
+                data: { labels: [], datasets: [{ data: [], backgroundColor: [], borderWidth: 0 }] },
                 options: {
-                    indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
-                        datalabels: { display: false },
+                        legend: { position: 'bottom', labels: { boxWidth: 12, usePointStyle: true } },
                         tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            titleColor: '#1e293b',
-                            bodyColor: '#334155',
-                            borderColor: '#e2e8f0',
-                            borderWidth: 1,
-                            padding: 10
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    let value = context.parsed || 0;
+                                    let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    let percentage = ((value / total) * 100).toFixed(1) + '%';
+                                    return ` ${label}: ${value} (${percentage})`;
+                                }
+                            }
                         }
                     },
-                    scales: {
-                        x: { grid: { borderDash: [3, 3] }, ticks: { stepSize: 20 } },
-                        y: { grid: { display: false } }
-                    }
+                    cutout: '65%'
                 }
             });
 
-            // Setup Bar Chart Lembaga
-            const lembagaDataObj = Object.entries(stats.countLembaga).sort((a,b) => b[1] - a[1]);
-            new Chart(document.getElementById('barLembaga'), {
-                type: 'bar',
-                data: {
-                    labels: lembagaDataObj.map(d => d[0]),
-                    datasets: [{
-                        label: 'Total Prodi',
-                        data: lembagaDataObj.map(d => d[1]),
-                        backgroundColor: '#14b8a6',
-                        borderRadius: { topLeft: 4, topRight: 4 }
-                    }]
-                },
+            // Jenjang Doughnut Chart
+            const ctxJenjang = document.getElementById('chartJenjang').getContext('2d');
+            chartJenjang = new Chart(ctxJenjang, {
+                type: 'doughnut',
+                data: { labels: [], datasets: [{ data: [], backgroundColor: [], borderWidth: 0 }] },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
-                        datalabels: { display: false },
+                        legend: { position: 'bottom', labels: { boxWidth: 12, usePointStyle: true } },
                         tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            titleColor: '#1e293b',
-                            bodyColor: '#334155',
-                            borderColor: '#e2e8f0',
-                            borderWidth: 1,
-                            padding: 10
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    let value = context.parsed || 0;
+                                    let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    let percentage = ((value / total) * 100).toFixed(1) + '%';
+                                    return ` ${label}: ${value} (${percentage})`;
+                                }
+                            }
                         }
                     },
-                    scales: {
-                        x: { grid: { display: false }, ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } } },
-                        y: { grid: { borderDash: [3, 3] }, ticks: { stepSize: 20 } }
-                    }
+                    cutout: '65%'
                 }
             });
         }
 
+        function updateCharts(currentData) {
+            if(!chartPeringkat || !chartJenjang || !chartMasaBerlaku) return;
+
+            // Process Data for Peringkat
+            const peringkatCounts = currentData.reduce((acc, item) => {
+                acc[item.peringkat] = (acc[item.peringkat] || 0) + 1;
+                return acc;
+            }, {});
+            const sortedPeringkatKeys = Object.keys(peringkatCounts).sort((a,b) => peringkatCounts[b] - peringkatCounts[a]);
+            chartPeringkat.data.labels = sortedPeringkatKeys;
+            chartPeringkat.data.datasets[0].data = sortedPeringkatKeys.map(k => peringkatCounts[k]);
+            chartPeringkat.data.datasets[0].backgroundColor = sortedPeringkatKeys.map(k => COLORS[k] || DEFAULT_COLOR);
+            chartPeringkat.update();
+
+            // Process Data for Masa Berlaku
+            const masaCounts = currentData.reduce((acc, item) => {
+                acc[item.statusMasa] = (acc[item.statusMasa] || 0) + 1;
+                return acc;
+            }, {});
+            const masaKeys = Object.keys(masaCounts).sort((a,b) => masaCounts[b] - masaCounts[a]);
+            chartMasaBerlaku.data.labels = masaKeys;
+            chartMasaBerlaku.data.datasets[0].data = masaKeys.map(k => masaCounts[k]);
+            chartMasaBerlaku.data.datasets[0].backgroundColor = masaKeys.map(k => MASA_COLORS[k] || DEFAULT_COLOR);
+            chartMasaBerlaku.update();
+
+            // Process Data for Jenjang
+            const jenjangCounts = currentData.reduce((acc, item) => {
+                acc[item.jenjang] = (acc[item.jenjang] || 0) + 1;
+                return acc;
+            }, {});
+            const jenjangKeys = Object.keys(jenjangCounts).sort((a,b) => jenjangCounts[b] - jenjangCounts[a]);
+            const jenjangPalette = ['#0f172a', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6', '#f43f5e', '#64748b'];
+            chartJenjang.data.labels = jenjangKeys;
+            chartJenjang.data.datasets[0].data = jenjangKeys.map(k => jenjangCounts[k]);
+            chartJenjang.data.datasets[0].backgroundColor = jenjangPalette.slice(0, jenjangKeys.length);
+            chartJenjang.update();
+        }
+
+        // --- TABLE FUNCTIONS ---
         function renderTable() {
             const tbody = document.getElementById('tableBody');
             
             if (filteredData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="px-6 py-10 text-center text-slate-500">Data tidak ditemukan</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="px-6 py-10 text-center text-slate-500">Data tidak ditemukan</td></tr>`;
             } else {
                 tbody.innerHTML = filteredData.map(item => {
                     const pillColor = COLORS[item.peringkat] || '#64748b';
@@ -528,20 +605,32 @@
                            </a>`
                         : `<span class="text-slate-400 text-xs italic">-</span>`;
 
+                    // Format Badge Masa Berlaku
+                    let masaBadge = '';
+                    if (item.statusMasa === 'Kadaluarsa') {
+                        masaBadge = `<span class="mt-1 inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-red-100 text-red-800">Kadaluarsa</span>`;
+                    } else if (item.statusMasa === 'Berakhir Tahun Ini') {
+                        masaBadge = `<span class="mt-1 inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Tahun Ini</span>`;
+                    }
+
                     return `
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-6 py-4 text-sm font-medium text-slate-500">${item.nomor}</td>
-                        <td class="px-6 py-4 text-sm font-medium text-slate-500">${item.kode}</td>
-                        <td class="px-6 py-4 text-sm text-slate-800 font-medium">${item.nama}</td>
-                        <td class="px-6 py-4 text-sm text-slate-600">${item.jenjang}</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2.5 py-1 text-xs font-medium rounded-full" style="background-color: ${pillBg}; color: ${pillColor}">
+                        <td class="px-3 py-3 text-sm font-medium text-slate-500 break-words">${item.nomor}</td>
+                        <td class="px-3 py-3 text-sm font-medium text-slate-500 break-words">${item.kode}</td>
+                        <td class="px-3 py-3 text-sm text-slate-800 font-medium break-words">${item.nama}</td>
+                        <td class="px-3 py-3 text-sm text-slate-600 break-words">${item.jenjang}</td>
+                        <td class="px-3 py-3">
+                            <span class="px-2.5 py-1 text-xs font-medium rounded-full inline-block text-center break-words" style="background-color: ${pillBg}; color: ${pillColor}">
                                 ${item.peringkat}
                             </span>
                         </td>
-                        <td class="px-6 py-4 text-sm text-slate-600">${item.lembaga}</td>
-                        <td class="px-6 py-4 text-sm text-slate-500">${item.masa || '-'}</td>
-                        <td class="px-6 py-4 text-sm text-center">${sertifikatHtml}</td>
+                        <td class="px-3 py-3 text-sm text-slate-500 break-all" title="${item.sk}">${item.sk || '-'}</td>
+                        <td class="px-3 py-3 text-sm text-slate-600 break-words">${item.lembaga}</td>
+                        <td class="px-3 py-3 text-sm text-slate-500 break-words">
+                            <span class="block">${item.masa || '-'}</span>
+                            ${masaBadge}
+                        </td>
+                        <td class="px-3 py-3 text-sm text-center break-words">${sertifikatHtml}</td>
                     </tr>
                     `;
                 }).join('');
@@ -557,9 +646,15 @@
             filteredData = data.filter(item => {
                 const matchSearch = item.nama.toLowerCase().includes(searchTerm.toLowerCase()) || item.kode.includes(searchTerm);
                 const matchJenjang = filterJenjang === 'All' || item.jenjang === filterJenjang;
-                return matchSearch && matchJenjang;
+                const matchPeringkat = filterPeringkat === 'All' || item.peringkat === filterPeringkat;
+                const matchLembaga = filterLembaga === 'All' || item.lembaga === filterLembaga;
+                return matchSearch && matchJenjang && matchPeringkat && matchLembaga;
             });
             renderTable();
+            
+            // Update Dashboard Interaktif
+            updateDashboardCards(filteredData);
+            updateCharts(filteredData);
         }
 
         // Initialize App
@@ -568,30 +663,6 @@
             data = parseHTMLData(rawHTMLData);
             filteredData = [...data];
 
-            // Compute statistics
-            let unggulAndA = 0;
-            let baikSekaliAndB = 0;
-            const countPeringkat = {};
-            const countJenjang = {};
-            const countLembaga = {};
-
-            data.forEach(item => {
-                countPeringkat[item.peringkat] = (countPeringkat[item.peringkat] || 0) + 1;
-                if (item.peringkat === 'Unggul' || item.peringkat === 'A') unggulAndA++;
-                if (item.peringkat === 'Baik Sekali' || item.peringkat === 'B') baikSekaliAndB++;
-                
-                countJenjang[item.jenjang] = (countJenjang[item.jenjang] || 0) + 1;
-                
-                const lembagaClean = item.lembaga.toUpperCase().replace(/\s/g, '');
-                countLembaga[lembagaClean] = (countLembaga[lembagaClean] || 0) + 1;
-            });
-
-            const stats = { total: data.length, countPeringkat, countJenjang, countLembaga, unggulAndA, baikSekaliAndB };
-
-            // Render static elements
-            renderKPIs(stats);
-            initCharts(stats);
-            
             // Setup Filter Options
             const selectEl = document.getElementById('filterSelect');
             const uniqueJenjang = Array.from(new Set(data.map(item => item.jenjang)));
@@ -602,8 +673,27 @@
                 selectEl.appendChild(opt);
             });
 
-            // Initial Render Table
-            renderTable();
+            const selectPeringkatEl = document.getElementById('filterPeringkat');
+            const uniquePeringkat = Array.from(new Set(data.map(item => item.peringkat))).filter(p => p !== '');
+            uniquePeringkat.sort().forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p;
+                selectPeringkatEl.appendChild(opt);
+            });
+
+            const selectLembagaEl = document.getElementById('filterLembaga');
+            const uniqueLembaga = Array.from(new Set(data.map(item => item.lembaga))).filter(l => l !== '');
+            uniqueLembaga.sort().forEach(l => {
+                const opt = document.createElement('option');
+                opt.value = l;
+                opt.textContent = l;
+                selectLembagaEl.appendChild(opt);
+            });
+
+            // Init Dashboard & Render Table
+            initCharts();
+            applyFilters(); // This will trigger renderTable, updateCards, and updateCharts initially
 
             // Event Listeners
             document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -613,6 +703,16 @@
 
             document.getElementById('filterSelect').addEventListener('change', (e) => {
                 filterJenjang = e.target.value;
+                applyFilters();
+            });
+
+            document.getElementById('filterPeringkat').addEventListener('change', (e) => {
+                filterPeringkat = e.target.value;
+                applyFilters();
+            });
+
+            document.getElementById('filterLembaga').addEventListener('change', (e) => {
+                filterLembaga = e.target.value;
                 applyFilters();
             });
         });
